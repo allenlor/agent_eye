@@ -127,6 +127,7 @@ COPY --from=pruner /app/out/full/ .
 # Keep the documented direct golang-migrate recovery paths available in the
 # production image while maintaining canonical/ as the only authored tree.
 RUN set -eu; \
+    find ./packages/shared/clickhouse/migrations -name '*.sql' -exec sed -i 's/\r$//' {} +; \
     node ./packages/shared/clickhouse/scripts/prepare-migrations.mjs materialize ./packages/shared/clickhouse/migrations; \
     chmod 755 ./packages/shared/clickhouse/migrations/clustered ./packages/shared/clickhouse/migrations/unclustered
 
@@ -200,7 +201,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/packages/shared/clickhouse ./pack
 
 COPY --chown=nextjs:nodejs ./web/entrypoint.sh ./web/entrypoint.sh
 COPY --chown=nextjs:nodejs ./packages/shared/scripts/cleanup.sql ./packages/shared/scripts/cleanup.sql
-RUN chmod +x ./web/entrypoint.sh
+RUN find ./packages/shared/clickhouse -name '*.sh' -exec sed -i 's/\r$//' {} + && \
+    sed -i 's/\r$//' ./web/entrypoint.sh ./packages/shared/scripts/cleanup.sql && \
+    chmod +x ./web/entrypoint.sh ./packages/shared/clickhouse/scripts/*.sh
 
 USER nextjs
 

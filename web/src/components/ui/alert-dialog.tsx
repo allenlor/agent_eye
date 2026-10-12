@@ -4,6 +4,7 @@
 import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
+import { translateNode } from "@/src/features/i18n/translateNode";
 import { cn } from "@/src/utils/tailwind";
 import { buttonVariants } from "@/src/components/ui/button";
 import { useLayerContainer } from "@/src/context/LayerContext/LayerContext";
@@ -87,24 +88,28 @@ AlertDialogFooter.displayName = "AlertDialogFooter";
 const AlertDialogTitle = React.forwardRef<
   React.ComponentRef<typeof AlertDialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <AlertDialogPrimitive.Title
     ref={ref}
     className={cn("text-lg font-bold", className)}
     {...props}
-  />
+  >
+    {translateNode(children)}
+  </AlertDialogPrimitive.Title>
 ));
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
 
 const AlertDialogDescription = React.forwardRef<
   React.ComponentRef<typeof AlertDialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <AlertDialogPrimitive.Description
     ref={ref}
     className={cn("text-muted-foreground text-sm", className)}
     {...props}
-  />
+  >
+    {translateNode(children)}
+  </AlertDialogPrimitive.Description>
 ));
 AlertDialogDescription.displayName =
   AlertDialogPrimitive.Description.displayName;

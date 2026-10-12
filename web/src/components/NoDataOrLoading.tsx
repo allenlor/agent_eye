@@ -1,5 +1,6 @@
 /* eslint-disable @repo/no-style-props */
 import React from "react";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import DocPopup from "@/src/components/layouts/doc-popup";
 import { Skeleton } from "@/src/components/ui/skeleton";
@@ -28,7 +29,7 @@ const NoData = ({
         className,
       )}
     >
-      <p className="text-muted-foreground">{noDataText}</p>
+      <p className="text-muted-foreground">{t(noDataText)}</p>
       {children}
     </div>
   );

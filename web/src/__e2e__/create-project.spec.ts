@@ -98,7 +98,7 @@ test.describe("Create project", () => {
     );
 
     await page.waitForTimeout(10000);
-    await checkPageHeaderTitle(page, "Home");
+    await checkPageHeaderTitle(page, "首页");
 
     // Check for console errors
     // expect(errors).toHaveLength(0);
@@ -112,10 +112,10 @@ test.describe("Create project", () => {
   });
 
   [
-    { title: "Tracing", url: "/traces", subTitle: "Traces" },
-    { title: "Sessions", url: "/sessions" },
-    { title: "Tracing", url: "/observations", subTitle: "Observations" },
-    { title: "Scores", url: "/scores" },
+    { title: "追踪", url: "/traces", subTitle: "Traces" },
+    { title: "会话", url: "/sessions" },
+    { title: "追踪", url: "/observations", subTitle: "Observations" },
+    { title: "评分", url: "/scores" },
   ].forEach(({ title, url, subTitle }) => {
     test(`Check ${title} ${subTitle ? `- ${subTitle}` : ""} page`, async ({
       page,

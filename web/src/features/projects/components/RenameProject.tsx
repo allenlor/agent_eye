@@ -19,6 +19,7 @@ import { LockIcon } from "lucide-react";
 import { useQueryProject } from "@/src/features/projects/hooks";
 import { useSession } from "next-auth/react";
 import { useHasProjectAccess } from "@/src/features/rbac";
+import { t } from "@/src/features/i18n";
 
 export default function RenameProject() {
   const { update: updateSession } = useSession();
@@ -66,14 +67,14 @@ export default function RenameProject() {
       <Card className="mb-4 p-3">
         {form.getValues().name !== "" ? (
           <p className="text-primary mb-4 text-sm">
-            Your Project will be renamed from &quot;
+            {t("Your Project will be renamed from")} &quot;
             {project?.name ?? ""}
-            &quot; to &quot;
+            &quot; {t("renamed to")} &quot;
             <b>{form.watch().name}</b>&quot;.
           </p>
         ) : (
           <p className="text-primary mb-4 text-sm">
-            Your Project is currently named &quot;
+            {t("Your Project is currently named")} &quot;
             <b>{project?.name ?? ""}</b>
             &quot;.
           </p>

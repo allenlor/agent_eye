@@ -4,6 +4,7 @@ import Link from "next/link";
 import { type MouseEventHandler, type Ref } from "react";
 
 import { Spinner } from "@/src/components/design-system/Spinner/Spinner";
+import { t } from "@/src/features/i18n";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
@@ -81,7 +82,7 @@ export function Button(props: ButtonProps) {
           rel={isLangfuseDomain ? "noopener" : "noopener noreferrer"}
         >
           {Icon ? <Icon className="size-3.5 shrink-0" aria-hidden /> : null}
-          {props.text}
+          {t(props.text)}
           <ExternalLink className="size-3" aria-hidden />
         </a>
       );
@@ -90,7 +91,7 @@ export function Button(props: ButtonProps) {
     return (
       <Link className={className} href={props.href} ref={props.ref}>
         {Icon ? <Icon className="size-3.5 shrink-0" aria-hidden /> : null}
-        {props.text}
+        {t(props.text)}
       </Link>
     );
   }
@@ -106,7 +107,7 @@ export function Button(props: ButtonProps) {
       disabled={props.disabled || props.loading}
       onClick={props.loading || props.disabled ? undefined : props.onClick}
       aria-busy={props.loading}
-      aria-label={props.text}
+      aria-label={t(props.text)}
     >
       {props.loading ? (
         <span className="flex h-1/2 items-center justify-center">
@@ -115,7 +116,7 @@ export function Button(props: ButtonProps) {
       ) : (
         <>
           {Icon ? <Icon className="size-3.5 shrink-0" aria-hidden /> : null}
-          {props.text}
+          {t(props.text)}
         </>
       )}
     </button>

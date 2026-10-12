@@ -1,3 +1,4 @@
+import { t } from "@/src/features/i18n";
 import { z } from "zod";
 import { addMinutes, format } from "date-fns";
 
@@ -146,7 +147,9 @@ function getFullTimeRangeFromAbbreviated(
 }
 
 export function getTimeRangeLabel(option: string): string {
-  return TIME_RANGES[option as keyof typeof TIME_RANGES]?.label || option;
+  return t(
+    TIME_RANGES[option as keyof typeof TIME_RANGES]?.label || option,
+  );
 }
 
 export const findClosestDashboardInterval = (

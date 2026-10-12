@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useEffect, memo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { env } from "@/src/env.mjs";
+import { t } from "@/src/features/i18n";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { useCommandMenu } from "@/src/features/command-k-menu/CommandMenuProvider";
@@ -86,12 +87,12 @@ function MainNavigationGroup({
   const capture = usePostHogClientCapture();
 
   return (
-    <CommandGroup heading="Main Navigation">
+    <CommandGroup heading={t("Main Navigation")}>
       {navItems.map((item) => (
         <CommandItem
           key={item.url}
           value={item.url}
-          keywords={[item.title]}
+          keywords={[item.title, t(item.title)]}
           onSelect={() => {
             router.push(item.url);
             capture("cmd_k_menu:navigated", {
@@ -102,7 +103,7 @@ function MainNavigationGroup({
             onNavigate(item);
           }}
         >
-          {item.title}
+          {t(item.title)}
         </CommandItem>
       ))}
     </CommandGroup>
@@ -119,11 +120,11 @@ function ProjectsGroup({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       <CommandSeparator />
-      <CommandGroup heading="Projects">
+      <CommandGroup heading={t("Projects")}>
         {allProjectItems.map((item) => (
           <CommandItem
             key={item.url}
-            value={item.title}
+            value={`${item.title} ${t(item.title)}`}
             keywords={item.keywords}
             disabled={item.active}
             onSelect={() => {
@@ -136,7 +137,7 @@ function ProjectsGroup({ onNavigate }: { onNavigate: () => void }) {
               onNavigate();
             }}
           >
-            {item.title}
+            {t(item.title)}
           </CommandItem>
         ))}
       </CommandGroup>
@@ -172,7 +173,7 @@ function DashboardsGroup({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       <CommandSeparator />
-      <CommandGroup heading="Dashboards">
+      <CommandGroup heading={t("Dashboards")}>
         {dashboards.map((dashboard) => (
           <CommandItem
             key={dashboard.id}
@@ -221,11 +222,11 @@ function ProjectSettingsGroup({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       <CommandSeparator />
-      <CommandGroup heading="Project Settings">
+      <CommandGroup heading={t("Project Settings")}>
         {projectSettingsItems.map((item) => (
           <CommandItem
             key={item.url}
-            value={item.title}
+            value={`${item.title} ${t(item.title)}`}
             keywords={item.keywords}
             onSelect={() => {
               router.push(item.url);
@@ -237,7 +238,7 @@ function ProjectSettingsGroup({ onNavigate }: { onNavigate: () => void }) {
               onNavigate();
             }}
           >
-            {item.title}
+            {t(item.title)}
           </CommandItem>
         ))}
       </CommandGroup>
@@ -264,11 +265,11 @@ function OrganizationSettingsGroup({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       <CommandSeparator />
-      <CommandGroup heading="Organization Settings">
+      <CommandGroup heading={t("Organization Settings")}>
         {orgSettingsItems.map((item) => (
           <CommandItem
             key={item.url}
-            value={item.title}
+            value={`${item.title} ${t(item.title)}`}
             keywords={item.keywords}
             onSelect={() => {
               router.push(item.url);
@@ -280,7 +281,7 @@ function OrganizationSettingsGroup({ onNavigate }: { onNavigate: () => void }) {
               onNavigate();
             }}
           >
-            {item.title}
+            {t(item.title)}
           </CommandItem>
         ))}
       </CommandGroup>
@@ -306,11 +307,11 @@ function AccountSettingsGroup({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       <CommandSeparator />
-      <CommandGroup heading="Account Settings">
+      <CommandGroup heading={t("Account Settings")}>
         {accountSettingsItems.map((item) => (
           <CommandItem
             key={item.url}
-            value={item.title}
+            value={`${item.title} ${t(item.title)}`}
             keywords={item.keywords}
             onSelect={() => {
               router.push(item.url);
@@ -322,7 +323,7 @@ function AccountSettingsGroup({ onNavigate }: { onNavigate: () => void }) {
               onNavigate();
             }}
           >
-            {item.title}
+            {t(item.title)}
           </CommandItem>
         ))}
       </CommandGroup>
@@ -411,7 +412,7 @@ function CommandMenuComponent({
       }}
     >
       <CommandInput
-        placeholder="Type a command or search..."
+        placeholder={t("Type a command or search...")}
         className="border-none focus:border-none focus:ring-0 focus:ring-transparent focus:outline-hidden"
         value={search}
         onValueChange={(value) => {
@@ -420,9 +421,9 @@ function CommandMenuComponent({
         }}
       />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>{t("No results found.")}</CommandEmpty>
         {idNavigationItem ? (
-          <CommandGroup heading="Tracing">
+          <CommandGroup heading={t("Tracing")}>
             <CommandItem
               value={`${idNavigationItem.title} ${search}`}
               onSelect={() => {
@@ -433,7 +434,7 @@ function CommandMenuComponent({
                 handleNavigate();
               }}
             >
-              {idNavigationItem.title}
+              {t(idNavigationItem.title)}
             </CommandItem>
           </CommandGroup>
         ) : null}

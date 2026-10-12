@@ -1,4 +1,5 @@
 import { Button } from "@/src/components/ui/button";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import React from "react";
 
@@ -34,7 +35,7 @@ export function AuthProviderButton({
           showLastUsedBadge ? "visible" : "invisible",
         )}
       >
-        Last used
+        {t("Last used")}
       </div>
     </div>
   );

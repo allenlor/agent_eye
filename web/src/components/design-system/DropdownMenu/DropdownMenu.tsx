@@ -1,5 +1,7 @@
 "use client";
 
+import { t } from "@/src/features/i18n";
+
 import {
   autoUpdate,
   flip,
@@ -267,7 +269,10 @@ function DropdownMenuNode({
       if (item.type === "separator" || item.type === "loading") return false;
       if (item.searchBehavior && item.searchBehavior !== "default")
         return false;
-      return item.title.toLocaleLowerCase().includes(normalizedQuery);
+      return (
+        item.title.toLocaleLowerCase().includes(normalizedQuery) ||
+        t(item.title).toLocaleLowerCase().includes(normalizedQuery)
+      );
     });
 
     return items.filter((item) => {
@@ -278,7 +283,10 @@ function DropdownMenuNode({
       if (item.searchBehavior === "show-when-no-results") {
         return !hasDefaultMatch;
       }
-      return item.title.toLocaleLowerCase().includes(normalizedQuery);
+      return (
+        item.title.toLocaleLowerCase().includes(normalizedQuery) ||
+        t(item.title).toLocaleLowerCase().includes(normalizedQuery)
+      );
     });
   }, [items, search, searchQuery]);
 
@@ -333,10 +341,10 @@ function DropdownMenuNode({
             >
               {title ? (
                 <div className="border-border bg-popover sticky top-0 z-1 border-b px-3 py-2.5 text-sm font-bold">
-                  {title}
+                  {t(title)}
                   {description && (
                     <p className="text-muted-foreground mt-1 text-xs font-normal">
-                      {description}
+                      {t(description)}
                     </p>
                   )}
                 </div>
@@ -346,8 +354,8 @@ function DropdownMenuNode({
                   <input
                     type="search"
                     value={searchQuery}
-                    placeholder={search.placeholder}
-                    aria-label={search.placeholder}
+                    placeholder={t(search.placeholder)}
+                    aria-label={t(search.placeholder)}
                     className="border-input bg-background focus:ring-ring h-8 w-full rounded-md border px-2 text-sm outline-hidden focus:ring-1"
                     onChange={(event) => {
                       setSearchQuery(event.target.value);
@@ -416,7 +424,7 @@ function DropdownMenuNode({
 
                   if (item.type === "submenu") {
                     const ItemIcon = item.icon;
-                    labelsRef.current[index] = item.title;
+                    labelsRef.current[index] = t(item.title);
 
                     return (
                       <DropdownMenu
@@ -425,7 +433,7 @@ function DropdownMenuNode({
                         disabled={Boolean(item.disabled)}
                         maxHeight={maxHeight}
                         placement="right-start"
-                        ariaLabel={item.title}
+                        ariaLabel={t(item.title)}
                         search={item.search}
                       >
                         {({ getTriggerProps }) => (
@@ -455,7 +463,7 @@ function DropdownMenuNode({
                                 />
                               ) : null}
                               <span className="min-w-0 flex-1 overflow-hidden text-left text-ellipsis whitespace-nowrap">
-                                {item.title}
+                                {t(item.title)}
                               </span>
                               <ChevronRight
                                 className="ml-2 size-4"
@@ -470,7 +478,7 @@ function DropdownMenuNode({
 
                   if (item.type === "checkbox") {
                     const ItemIcon = item.icon;
-                    labelsRef.current[index] = item.title;
+                    labelsRef.current[index] = t(item.title);
                     const handleCheckedChange = (checked: boolean) => {
                       if (item.disabled) return;
                       if (item.closeOnCheckedChange) {
@@ -514,7 +522,7 @@ function DropdownMenuNode({
                             />
                           ) : null}
                           <span className="min-w-0 flex-1 overflow-hidden text-left text-ellipsis whitespace-nowrap">
-                            {item.title}
+                            {t(item.title)}
                           </span>
                           <span className="ml-2 flex shrink-0 items-center">
                             <Checkbox
@@ -534,7 +542,7 @@ function DropdownMenuNode({
 
                   const ItemIcon = item.icon;
                   const SecondaryIcon = item.secondaryAction?.icon;
-                  labelsRef.current[index] = item.title;
+                  labelsRef.current[index] = t(item.title);
                   let renderedSecondaryAction: React.ReactNode = null;
 
                   if (item.secondaryAction && SecondaryIcon) {
@@ -657,9 +665,9 @@ function DropdownMenuNode({
                           ) : null}
                           <span
                             className="min-w-0 flex-1 overflow-hidden text-left text-ellipsis whitespace-nowrap"
-                            title={item.title}
+                            title={t(item.title)}
                           >
-                            {item.title}
+                            {t(item.title)}
                           </span>
                         </Link>
                       ) : (
@@ -681,9 +689,9 @@ function DropdownMenuNode({
                           ) : null}
                           <span
                             className="min-w-0 flex-1 overflow-hidden text-left text-ellipsis whitespace-nowrap"
-                            title={item.title}
+                            title={t(item.title)}
                           >
-                            {item.title}
+                            {t(item.title)}
                           </span>
                         </button>
                       )}

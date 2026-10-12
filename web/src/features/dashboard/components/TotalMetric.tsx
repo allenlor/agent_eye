@@ -1,6 +1,7 @@
 /* eslint-disable @repo/no-style-props */
 import { cn } from "@/src/utils/tailwind";
 import { type ReactNode } from "react";
+import { t } from "@/src/features/i18n";
 
 export const TotalMetric = ({
   className,
@@ -19,7 +20,9 @@ export const TotalMetric = ({
       {description || children ? (
         <div className="flex min-w-0 items-center gap-1">
           {description ? (
-            <p className="text-muted-foreground text-sm">{description}</p>
+            <p className="text-muted-foreground text-sm">
+              {typeof description === "string" ? t(description) : description}
+            </p>
           ) : null}
           {children}
         </div>

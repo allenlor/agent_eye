@@ -18,6 +18,7 @@ import {
   SidebarRail,
 } from "@/src/components/ui/sidebar";
 import Link from "next/link";
+import { t } from "@/src/features/i18n";
 import { LangfuseLogo } from "@/src/components/design-system/LangfuseLogo/LangfuseLogo";
 import { type RouteGroup } from "@/src/components/layouts/routes";
 import {
@@ -439,7 +440,7 @@ function NavUser({
       return (
         <DropdownMenuSub key={item.name}>
           <DropdownMenuSubTrigger>
-            {item.content ?? item.name}
+            {item.content ?? t(item.name)}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             {item.subItems.map(renderMenuItem)}
@@ -451,7 +452,7 @@ function NavUser({
     if (item.type === "link") {
       return (
         <DropdownMenuItem key={item.name} asChild>
-          <Link href={item.href}>{item.content ?? item.name}</Link>
+          <Link href={item.href}>{item.content ?? t(item.name)}</Link>
         </DropdownMenuItem>
       );
     }
@@ -459,7 +460,7 @@ function NavUser({
     if (item.type === "action") {
       return (
         <DropdownMenuItem key={item.name} onClick={item.onClick}>
-          {item.content ?? item.name}
+          {item.content ?? t(item.name)}
         </DropdownMenuItem>
       );
     }

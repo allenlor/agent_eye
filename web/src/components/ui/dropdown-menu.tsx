@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import { translateNode } from "@/src/features/i18n/translateNode";
 import { cn } from "@/src/utils/tailwind";
 import { useLayerContainer } from "@/src/context/LayerContext/LayerContext";
 import { useScrollGradients } from "@/src/hooks/useScrollGradients";
@@ -315,7 +316,7 @@ const DropdownMenuItem = React.forwardRef<
     allowPointerEventsWhenDisabled?: boolean;
     inset?: boolean;
   }
->(({ allowPointerEventsWhenDisabled, className, inset, ...props }, ref) => (
+>(({ allowPointerEventsWhenDisabled, className, inset, children, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
@@ -325,7 +326,9 @@ const DropdownMenuItem = React.forwardRef<
       className,
     )}
     {...props}
-  />
+  >
+    {translateNode(children)}
+  </DropdownMenuPrimitive.Item>
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 

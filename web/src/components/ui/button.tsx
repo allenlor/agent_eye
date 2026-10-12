@@ -3,6 +3,8 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { translateNode } from "@/src/features/i18n/translateNode";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 
 import { Spinner as SpinnerLib } from "@/src/components/design-system/Spinner/Spinner";
@@ -95,10 +97,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? (
           <>
             <Spinner />
-            {loadingText}
+            {typeof loadingText === "string" ? t(loadingText) : loadingText}
           </>
         ) : (
-          children
+          translateNode(children, true)
         )}
       </Comp>
     );

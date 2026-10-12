@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { LangfuseIcon } from "@/src/components/design-system/LangfuseIcon/LangfuseIcon";
+import { t } from "@/src/features/i18n";
 import { Button } from "@/src/components/ui/button";
 import {
   Form,
@@ -789,7 +790,7 @@ export default function SignInPage({
             <LangfuseIcon alt="" />
           </div>
           <h2 className="text-primary mt-4 text-center text-2xl leading-9 font-bold tracking-tight">
-            Sign in to your account
+            {t("Sign in to your account")}
           </h2>
         </div>
 
@@ -901,17 +902,19 @@ export default function SignInPage({
                       : "hidden",
                   )}
                 >
-                  Last used
+                  {t("Last used")}
                 </div>
               </div>
             )}
             {credentialsFormError ? (
               <div className="text-destructive text-center text-sm font-bold">
-                {credentialsFormError}
+                {t(credentialsFormError)}
                 <br />
-                Contact support if this error is unexpected.{" "}
+                {t("Contact support if this error is unexpected.")}{" "}
                 {isLangfuseCloud &&
-                  "Make sure you are using the correct cloud data region."}
+                  t(
+                    "Make sure you are using the correct cloud data region.",
+                  )}
               </div>
             ) : null}
             <SSOButtons
@@ -926,12 +929,12 @@ export default function SignInPage({
           env.NEXT_PUBLIC_SIGN_UP_DISABLED !== "true" &&
           authProviders.credentials ? (
             <p className="text-muted-foreground mt-10 text-center text-sm">
-              No account yet?{" "}
+              {t("No account yet?")}{" "}
               <Link
                 href={`/auth/sign-up${router.asPath.includes("?") ? router.asPath.substring(router.asPath.indexOf("?")) : ""}`}
                 className="text-link hover:text-link-hover font-bold"
               >
-                Sign up
+                {t("Sign up")}
               </Link>
             </p>
           ) : null}

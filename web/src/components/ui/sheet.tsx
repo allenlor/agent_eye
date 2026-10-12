@@ -6,6 +6,7 @@ import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { X } from "lucide-react";
 
+import { translateNode } from "@/src/features/i18n/translateNode";
 import { cn } from "@/src/utils/tailwind";
 import { useLayerContainer } from "@/src/context/LayerContext/LayerContext";
 
@@ -116,24 +117,28 @@ SheetFooter.displayName = "SheetFooter";
 const SheetTitle = React.forwardRef<
   React.ComponentRef<typeof SheetPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
     className={cn("text-foreground text-lg font-bold", className)}
     {...props}
-  />
+  >
+    {translateNode(children)}
+  </SheetPrimitive.Title>
 ));
 SheetTitle.displayName = SheetPrimitive.Title.displayName;
 
 const SheetDescription = React.forwardRef<
   React.ComponentRef<typeof SheetPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
     className={cn("text-muted-foreground text-sm", className)}
     {...props}
-  />
+  >
+    {translateNode(children)}
+  </SheetPrimitive.Description>
 ));
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 

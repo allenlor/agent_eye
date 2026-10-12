@@ -7,6 +7,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import { useAnimatedBusy } from "@/src/hooks/useAnimatedBusy";
 import {
@@ -54,7 +55,7 @@ export function DataTableRefreshButton({
           "rounded-r-none border-r-0",
           compact && isActive && "border-primary",
         )}
-        title="Refresh"
+        title={t("Refresh")}
       >
         <RefreshCw className={cn("h-4 w-4", isSpinning && "animate-spin")} />
       </Button>
@@ -72,11 +73,11 @@ export function DataTableRefreshButton({
             {compact ? (
               // Drop the "Off" label; surface the interval only when set.
               isActive && (
-                <span className="ml-1 text-sm">{activeInterval?.label}</span>
+                <span className="ml-1 text-sm">{t(activeInterval?.label ?? "")}</span>
               )
             ) : (
               <span className="ml-1 text-sm">
-                {activeInterval?.label ?? "Off"}
+                {t(activeInterval?.label ?? "Off")}
               </span>
             )}
           </Button>
@@ -96,8 +97,8 @@ export function DataTableRefreshButton({
                 value={String(option.value)}
               >
                 {option.label === "Off"
-                  ? "Auto-refresh off"
-                  : `Every ${option.label}`}
+                  ? t("Auto-refresh off")
+                  : t(`Every ${option.label}`)}
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>

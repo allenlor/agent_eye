@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { Badge } from "@/src/components/design-system/Badge/Badge";
+import { t } from "@/src/features/i18n";
 import { HeaderActionButton } from "@/src/components/HeaderActionButton";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -194,7 +195,7 @@ export function PeekHeader({
           {/* Type never truncates: the word when it fits, the icon when not. */}
           <div ref={badgeRef} className="shrink-0">
             {plan.badgeShowLabel ? (
-              <Badge text={getItemTypeLabels(itemType).displayLabel} />
+              <Badge text={t(getItemTypeLabels(itemType).displayLabel)} />
             ) : (
               <ItemBadge type={itemType} />
             )}

@@ -12,6 +12,7 @@ import {
 import useLocalStorage from "@/src/components/useLocalStorage";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
 import { Rows3, Rows2, Rows4 } from "lucide-react";
+import { t } from "@/src/features/i18n";
 
 const ROW_HEIGHT_OPTIONS = [
   { id: "s", label: "Small", icon: <Rows4 /> },
@@ -75,13 +76,13 @@ export const DataTableRowHeightSwitch = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" title="Row height">
+        <Button variant="outline" size="icon" title={t("Row height")}>
           <Rows3 className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent>
-          <DropdownMenuLabel>Row height</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("Row height")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {ROW_HEIGHT_OPTIONS.map(({ id, label }) => (
             <DropdownMenuCheckboxItem
@@ -98,7 +99,7 @@ export const DataTableRowHeightSwitch = ({
                 setRowHeight(id);
               }}
             >
-              {label}
+              {t(label)}
             </DropdownMenuCheckboxItem>
           ))}
         </DropdownMenuContent>

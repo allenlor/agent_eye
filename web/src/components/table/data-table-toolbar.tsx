@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { SearchInput } from "@/src/components/design-system/SearchInput/SearchInput";
+import { t } from "@/src/features/i18n";
 import {
   DataTableColumnVisibilityFilter,
   type ColumnGroupTogglePayload,
@@ -638,7 +639,7 @@ export function DataTableToolbar<TData, TValue>({
                       className="flex h-8 items-center gap-2 text-sm md:hidden"
                     >
                       <Filter className="h-4 w-4" />
-                      <span>Filters</span>
+                      <span>{t("Filters")}</span>
                       {filterState.length > 0 && (
                         <span className="bg-input ml-1 rounded-sm px-1.5 text-xs shadow-xs">
                           {filterState.length}
@@ -651,7 +652,7 @@ export function DataTableToolbar<TData, TValue>({
                     aria-describedby={undefined}
                     className="flex h-[85svh] flex-col gap-0 p-0 [&>button]:hidden"
                   >
-                    <SheetTitle className="sr-only">Filters</SheetTitle>
+                    <SheetTitle className="sr-only">{t("Filters")}</SheetTitle>
                     <div className="flex shrink-0 items-center gap-2 border-b px-4 py-3">
                       <span className="text-foreground text-lg font-bold">
                         Filters

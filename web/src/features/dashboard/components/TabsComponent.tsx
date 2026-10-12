@@ -1,6 +1,7 @@
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
 import { cn } from "@/src/utils/tailwind";
 import { type ReactNode, useState } from "react";
+import { t } from "@/src/features/i18n";
 
 export type TabComponentProps = {
   tabs: {
@@ -29,7 +30,7 @@ export const TabComponent = ({ tabs }: TabComponentProps) => {
           onChange={(e) => setSelectedIndex(Number(e.target.selectedIndex))}
         >
           {tabs.map((tab) => (
-            <option key={tab.tabTitle}>{tab.tabTitle}</option>
+            <option key={tab.tabTitle}>{t(tab.tabTitle)}</option>
           ))}
         </select>
       </div>
@@ -56,7 +57,7 @@ export const TabComponent = ({ tabs }: TabComponentProps) => {
                   });
                 }}
               >
-                {tab.tabTitle}
+                {t(tab.tabTitle)}
               </a>
             ))}
           </nav>

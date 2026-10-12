@@ -11,6 +11,8 @@ import {
   useFormContext,
 } from "react-hook-form";
 
+import { t } from "@/src/features/i18n";
+import { translateNode } from "@/src/features/i18n/translateNode";
 import { cn } from "@/src/utils/tailwind";
 import { Label } from "@/src/components/ui/label";
 
@@ -88,7 +90,7 @@ FormItem.displayName = "FormItem";
 const FormLabel = React.forwardRef<
   React.ComponentRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => {
+>(({ className, children, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 
   return (
@@ -97,7 +99,9 @@ const FormLabel = React.forwardRef<
       className={cn(error && "text-destructive", className)}
       htmlFor={formItemId}
       {...props}
-    />
+    >
+      {translateNode(children)}
+    </Label>
   );
 });
 FormLabel.displayName = "FormLabel";
@@ -189,7 +193,13 @@ const FormMessage = React.forwardRef<
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
   const { error, formMessageId } = useFormField();
-  const body = getFieldErrorMessage(error) ?? children;
+  const message = getFieldErrorMessage(error);
+  const body =
+    typeof message === "string"
+      ? t(message)
+      : typeof children === "string"
+        ? t(children)
+        : (message ?? children);
 
   if (!body) {
     return null;

@@ -1,4 +1,5 @@
 import Header from "@/src/components/layouts/header";
+import { t } from "@/src/features/i18n";
 import React from "react";
 
 export const SettingsDangerZone: React.FC<{
@@ -18,8 +19,8 @@ export const SettingsDangerZone: React.FC<{
             className="flex items-center justify-between gap-4 border-b p-3 last:border-b-0"
           >
             <div>
-              <h4 className="font-bold">{item.title}</h4>
-              <p className="text-sm">{item.description}</p>
+              <h4 className="font-bold">{t(item.title)}</h4>
+              <p className="text-sm">{t(item.description)}</p>
             </div>
             {item.button}
           </div>

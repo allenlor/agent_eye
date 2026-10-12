@@ -7,6 +7,7 @@ import { ChevronDown, X } from "lucide-react";
 
 import { useLayerContainer } from "@/src/context/LayerContext/LayerContext";
 import { stopScrollPropagation } from "@/src/hooks/stopScrollPropagation";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import { InputControl } from "../internal/InputControl/InputControl";
 import { InputDropdown } from "../internal/InputDropdown/InputDropdown";
@@ -218,7 +219,7 @@ export function MultiSelectTagInput<V extends string>({
                 className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               >
                 {selectedOptions.length === 0 ? (
-                  <span className="text-muted-foreground">{placeholder}</span>
+                  <span className="text-muted-foreground">{t(placeholder)}</span>
                 ) : (
                   selectedOptions.map((option) => (
                     <span
@@ -319,11 +320,11 @@ export function MultiSelectTagInput<V extends string>({
             <InputDropdown.Root>
               <CommandPrimitive>
                 <InputDropdown.Search>
-                  <CommandPrimitive.Input placeholder={searchPlaceholder} />
+                  <CommandPrimitive.Input placeholder={t(searchPlaceholder)} />
                 </InputDropdown.Search>
                 <InputDropdown.Empty>
                   <CommandPrimitive.Empty>
-                    {emptyMessage}
+                    {t(emptyMessage)}
                   </CommandPrimitive.Empty>
                 </InputDropdown.Empty>
                 <InputDropdown.List>
@@ -347,8 +348,8 @@ export function MultiSelectTagInput<V extends string>({
                             }
                           >
                             <InputDropdown.OptionContent
-                              label={selectAllLabel}
-                              title={selectAllLabel}
+                              label={t(selectAllLabel)}
+                              title={t(selectAllLabel)}
                               type="checkbox"
                               checked={allSelected}
                             />

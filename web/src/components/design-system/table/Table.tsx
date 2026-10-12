@@ -13,6 +13,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown, MoreVertical } from "lucide-react";
 import { type ComponentProps, useMemo } from "react";
 
 import { DropdownMenu } from "@/src/components/design-system/DropdownMenu/DropdownMenu";
+import { localizeHeader, t } from "@/src/features/i18n";
 import { IconButton } from "@/src/components/design-system/IconButton/IconButton";
 import DocPopup from "@/src/components/layouts/doc-popup";
 import { Skeleton } from "@/src/components/ui/skeleton";
@@ -140,7 +141,7 @@ export function Table<TData extends object>({
                   const isSorted = orderBy?.column === header.column.id;
                   const headerTitle =
                     typeof column.header === "string"
-                      ? column.header
+                      ? t(column.header)
                       : undefined;
                   let ariaSort: React.AriaAttributes["aria-sort"];
                   if (isSortable) ariaSort = "none";
@@ -168,7 +169,10 @@ export function Table<TData extends object>({
                             className="truncate leading-normal"
                             title={headerTitle}
                           >
-                            {flexRender(column.header, header.getContext())}
+                            {flexRender(
+                              localizeHeader(column.header),
+                              header.getContext(),
+                            )}
                           </span>
                         )}
                         {!header.isPlaceholder && isSortable && setOrderBy && (
@@ -198,7 +202,10 @@ export function Table<TData extends object>({
                               className="truncate leading-normal"
                               title={headerTitle}
                             >
-                              {flexRender(column.header, header.getContext())}
+                              {flexRender(
+                              localizeHeader(column.header),
+                              header.getContext(),
+                            )}
                             </span>
                             {!isSorted && (
                               <ArrowUpDown

@@ -6,6 +6,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { translateNode } from "@/src/features/i18n/translateNode";
 import { cn } from "@/src/utils/tailwind";
 import { useLayerContainer } from "@/src/context/LayerContext/LayerContext";
 import { DialogController as DesignSystemDialogController } from "@/src/components/design-system/DialogController/DialogController";
@@ -314,24 +315,28 @@ DialogFooter.displayName = "DialogFooter";
 const DialogTitle = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
     className={cn("text-xl leading-none font-bold tracking-tight", className)}
     {...props}
-  />
+  >
+    {translateNode(children)}
+  </DialogPrimitive.Title>
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
 const DialogDescription = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
     className={cn("text-muted-foreground mt-1 text-sm", className)}
     {...props}
-  />
+  >
+    {translateNode(children)}
+  </DialogPrimitive.Description>
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 

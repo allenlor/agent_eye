@@ -3,6 +3,7 @@
 import { cva } from "class-variance-authority";
 import { type LucideIcon, X } from "lucide-react";
 import Link from "next/link";
+import { t } from "@/src/features/i18n";
 
 const calloutVariants = cva("relative w-full rounded-lg border p-3", {
   variants: {
@@ -87,7 +88,7 @@ export function Callout({
                       type="button"
                     >
                       {Icon ? <Icon className="size-4" aria-hidden /> : null}
-                      {action.label}
+                      {t(action.label)}
                     </button>
                   );
                 }
@@ -106,7 +107,7 @@ export function Callout({
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      {action.label}
+                      {t(action.label)}
                     </a>
                   );
                 }
@@ -118,7 +119,7 @@ export function Callout({
                     key={action.label}
                     onClick={action.onClick}
                   >
-                    {action.label}
+                    {t(action.label)}
                   </Link>
                 );
               })}

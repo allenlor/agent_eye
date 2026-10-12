@@ -32,7 +32,7 @@ test("a right drawer's absolutely-positioned content does not scroll the documen
 }) => {
   await page.setViewportSize(SHORT_VIEWPORT);
   await signIn(page);
-  await page.getByRole("button", { name: "Support" }).click();
+  await page.getByRole("button", { name: "支持" }).click();
   const drawerBody = page.locator("#secondary div.overflow-y-auto").first();
   await expect(drawerBody).toBeVisible();
 

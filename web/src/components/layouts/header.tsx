@@ -6,6 +6,7 @@ import {
   type Status,
   StatusBadge,
 } from "@/src/components/ui/StatusBadge/StatusBadge";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 
 type HeaderProps = {
@@ -54,13 +55,13 @@ function HeaderTitle({
         <h3
           className={cn("text-primary text-lg leading-7 font-bold", className)}
         >
-          {title}
+          {t(title)}
         </h3>
       );
     case "h4":
-      return <h4 className={cn("text-lg", className)}>{title}</h4>;
+      return <h4 className={cn("text-lg", className)}>{t(title)}</h4>;
     case "h5":
-      return <h5 className={cn("text-base", className)}>{title}</h5>;
+      return <h5 className={cn("text-base", className)}>{t(title)}</h5>;
   }
 }
 

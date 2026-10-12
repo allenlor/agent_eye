@@ -9,6 +9,7 @@ import { Fragment, type ReactNode } from "react";
 
 import { Skeleton } from "@/src/components/ui/skeleton";
 import { type LangfuseColumnDef } from "@/src/components/table/types";
+import { localizeHeader } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 
 const ROW_CLICK_IGNORE_SELECTOR = "[data-row-click-ignore]";
@@ -97,7 +98,7 @@ export function SimpleDataTable<TData extends object>({
                 {header.isPlaceholder
                   ? null
                   : flexRender(
-                      header.column.columnDef.header,
+                      localizeHeader(header.column.columnDef.header),
                       header.getContext(),
                     )}
               </th>

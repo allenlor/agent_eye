@@ -8,7 +8,9 @@ import {
   ChevronUp,
   ChevronDown,
 } from "lucide-react";
+import { zhCN } from "date-fns/locale";
 import { DayPicker, UI, SelectionState, DayFlag } from "react-day-picker";
+import { isUiChinese } from "@/src/features/i18n";
 
 import { cn } from "@/src/utils/tailwind";
 import { buttonVariants } from "@/src/components/ui/button";
@@ -24,6 +26,7 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      locale={isUiChinese() ? zhCN : undefined}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       disabled={disabled}

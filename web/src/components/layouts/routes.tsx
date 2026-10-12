@@ -37,6 +37,7 @@ import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
 import { CloudStatusMenu } from "@/src/features/cloud-status-notification/components/CloudStatusMenu";
 import { type ProductModule } from "@/src/ee/features/ui-customization/productModuleSchema";
 import { matchesPathname } from "@/src/components/layouts/app-layout/utils/pathClassification";
+import { t } from "@/src/features/i18n";
 
 export enum RouteSection {
   Main = "main",
@@ -313,7 +314,7 @@ function CommandMenuTrigger() {
       className="whitespace-nowrap"
     >
       <Search className="h-4 w-4" />
-      Go to...
+      {t("Go to...")}
       <span className="-mr-px ml-auto hidden md:inline-flex">
         <KeyboardShortcut keys={["Mod", "K"]} />
       </span>

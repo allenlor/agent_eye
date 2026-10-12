@@ -1,3 +1,4 @@
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -78,17 +79,17 @@ export const PagedSettingsContainer = ({
             value={currentPage.slug}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select a page" />
+              <SelectValue placeholder={t("Select a page")} />
             </SelectTrigger>
             <SelectContent>
               {groupPagesBySection(availablePages).map((group) => (
                 <SelectGroup key={group.section ?? "default"}>
                   {group.section ? (
-                    <SelectLabel>{group.section}</SelectLabel>
+                    <SelectLabel>{t(group.section)}</SelectLabel>
                   ) : null}
                   {group.pages.map((page) => (
                     <SelectItem key={page.title} value={page.slug}>
-                      {page.title}
+                      {t(page.title)}
                       {"href" in page && (
                         <ArrowUpRight size={14} className="ml-1 inline" />
                       )}
@@ -111,7 +112,7 @@ export const PagedSettingsContainer = ({
               {page.section &&
               page.section !== availablePages[index - 1]?.section ? (
                 <span className="text-muted-foreground mt-4 flex h-8 items-center px-2 text-xs font-bold first:mt-0">
-                  {page.section}
+                  {t(page.section)}
                 </span>
               ) : null}
               {"href" in page ? (
@@ -119,7 +120,7 @@ export const PagedSettingsContainer = ({
                   href={page.href}
                   className="hover:bg-muted hover:text-foreground flex h-8 flex-row items-center gap-2 rounded-sm px-2"
                 >
-                  {page.title}
+                  {t(page.title)}
                   <ArrowUpRight size={14} className="inline" />
                 </Link>
               ) : (
@@ -131,7 +132,7 @@ export const PagedSettingsContainer = ({
                       "bg-muted text-primary font-bold",
                   )}
                 >
-                  {page.title}
+                  {t(page.title)}
                 </span>
               )}
             </Fragment>

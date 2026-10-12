@@ -23,6 +23,7 @@ import {
 } from "@/src/components/ui/popover";
 import { cn } from "@/src/utils/tailwind";
 import { useViewData } from "@/src/components/table/table-view-presets/hooks/useViewData";
+import { t } from "@/src/features/i18n";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
 
 const CATEGORY_ICONS: Record<SystemTableViewPresetCategory, LucideIcon> = {
@@ -257,7 +258,7 @@ export function CategoryPresetChips({
               }}
             >
               <div className="text-muted-foreground px-2 py-1.5 text-xs font-bold">
-                {label}
+                {t(label)}
               </div>
               <div className="max-h-72 overflow-y-auto">
                 {presets.map((preset) => {
@@ -345,16 +346,16 @@ export function CategoryPresetChips({
                     >
                       <span className="flex flex-col">
                         <span className="flex items-center gap-1.5 font-bold">
-                          {preset.name}
+                          {t(preset.name)}
                           {preset.disabled && (
                             <span className="text-muted-foreground rounded-sm border px-1 text-[10px] font-normal uppercase">
-                              Soon
+                              {t("Soon")}
                             </span>
                           )}
                         </span>
                         {preset.description && (
                           <span className="text-muted-foreground text-xs">
-                            {preset.description}
+                            {t(preset.description)}
                           </span>
                         )}
                       </span>

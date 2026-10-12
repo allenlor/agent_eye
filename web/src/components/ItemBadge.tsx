@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { cva } from "class-variance-authority";
 import { type ObservationType } from "@langfuse/shared";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 
 export type LangfuseItemType =
@@ -145,7 +146,8 @@ export function ItemBadge({
     className,
   );
 
-  const { label, displayLabel } = getItemTypeLabels(type);
+  const { displayLabel } = getItemTypeLabels(type);
+  const label = t(displayLabel);
 
   return (
     <Badge
@@ -169,8 +171,8 @@ export function ItemBadge({
     >
       {!showLabel && <Icon className={iconClass} />}
       {showLabel && (
-        <span className="truncate" title={displayLabel}>
-          {displayLabel}
+        <span className="truncate" title={label}>
+          {label}
         </span>
       )}
     </Badge>

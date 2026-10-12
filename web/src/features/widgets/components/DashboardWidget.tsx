@@ -17,6 +17,7 @@ import { type z } from "zod";
 import { Chart } from "@/src/features/widgets/chart-library/Chart";
 import { type ChartProps } from "@/src/features/widgets/chart-library/chart-props";
 import { type FilterState, type OrderByState } from "@langfuse/shared";
+import { t } from "@/src/features/i18n";
 import { isTimeSeriesChart } from "@/src/features/widgets/chart-library/utils";
 import {
   PencilIcon,
@@ -622,10 +623,23 @@ export function DashboardWidget({
       <div className="flex items-center justify-between">
         <span
           className="flex min-w-0 items-center gap-1.5 truncate text-base font-bold"
-          title={widget.data.name}
+          title={
+            widget.data.owner === "LANGFUSE"
+              ? t(widget.data.name)
+              : widget.data.name
+          }
         >
-          <span className="truncate" title={widget.data.name}>
-            {widget.data.name}
+          <span
+            className="truncate"
+            title={
+              widget.data.owner === "LANGFUSE"
+                ? t(widget.data.name)
+                : widget.data.name
+            }
+          >
+            {widget.data.owner === "LANGFUSE"
+              ? t(widget.data.name)
+              : widget.data.name}
           </span>
           {dashboardOwner === "PROJECT" && widget.data.owner === "LANGFUSE" && (
             <Badge
@@ -768,9 +782,15 @@ export function DashboardWidget({
       </div>
       <div
         className="text-muted-foreground mb-4 truncate text-sm"
-        title={widget.data.description}
+        title={
+          widget.data.owner === "LANGFUSE" && widget.data.description
+            ? t(widget.data.description)
+            : widget.data.description
+        }
       >
-        {widget.data.description}
+        {widget.data.owner === "LANGFUSE" && widget.data.description
+          ? t(widget.data.description)
+          : widget.data.description}
       </div>
       <div className="flex min-h-0 flex-1 flex-col">
         {!queryValidation.valid ? (

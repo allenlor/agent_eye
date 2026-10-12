@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @repo/no-style-props */
 import { useCallback, useMemo, useRef, useState } from "react";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import { X } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
@@ -549,7 +550,7 @@ export function OutlierBarStrip({
         >
           {hasActivity
             ? `No ${metricSpec.shortLabel.toLowerCase()} data in range`
-            : "No observations in range"}
+            : t("No observations in range")}
         </span>
       )}
 

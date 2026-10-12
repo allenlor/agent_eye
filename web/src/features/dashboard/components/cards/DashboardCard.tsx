@@ -9,6 +9,7 @@ import {
 } from "@/src/components/ui/card";
 import { cn } from "@/src/utils/tailwind";
 import { type ReactNode } from "react";
+import { t } from "@/src/features/i18n";
 
 export type DashboardCardProps = {
   className?: string;
@@ -38,9 +39,13 @@ export const DashboardCard = ({
       <CardHeader className={cn("relative", headerClassName)}>
         <div className="flex justify-between">
           <div className="flex flex-col gap-1.5">
-            <CardTitle className="text-base">{title}</CardTitle>
+            <CardTitle className="text-base">
+              {typeof title === "string" ? t(title) : title}
+            </CardTitle>
             {description ? (
-              <CardDescription>{description}</CardDescription>
+              <CardDescription>
+                {typeof description === "string" ? t(description) : description}
+              </CardDescription>
             ) : undefined}
           </div>
           {headerRight}

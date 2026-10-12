@@ -34,6 +34,7 @@ import { useHasProjectAccess } from "@/src/features/rbac";
 import { v4 as uuidv4 } from "uuid";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
+import { t } from "@/src/features/i18n";
 import {
   type DashboardPlacement,
   parsePastedWidget,
@@ -1185,9 +1186,11 @@ function DashboardDetailView({ readPath }: { readPath: ResolvedReadPath }) {
                   scrollable
                   headerProps={{
                     title:
-                      (dashboard.data?.name || "Dashboard") +
                       (dashboard.data?.owner === "LANGFUSE"
-                        ? " (Langfuse Maintained)"
+                        ? t(dashboard.data?.name || "Dashboard")
+                        : dashboard.data?.name || t("Dashboard")) +
+                      (dashboard.data?.owner === "LANGFUSE"
+                        ? t(" (Langfuse Maintained)")
                         : ""),
                     titleContent:
                       hasCUDAccess && dashboard.data ? (

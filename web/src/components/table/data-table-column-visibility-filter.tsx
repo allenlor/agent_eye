@@ -13,6 +13,7 @@ import {
 } from "@tanstack/react-table";
 import { ChevronDown, ChevronRight, Menu } from "lucide-react";
 import { type LangfuseColumnDef } from "@/src/components/table/types";
+import { t } from "@/src/features/i18n";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
 import DocPopup from "@/src/components/layouts/doc-popup";
 import {
@@ -83,10 +84,12 @@ interface ColumnVisibilityProps<TData, TValue> {
 const getColumnLabel = <TData, TValue>(
   column: LangfuseColumnDef<TData, TValue>,
 ) =>
-  column.headerLabel ??
-  (typeof column.header === "string" && column.header
-    ? column.header
-    : column.accessorKey);
+  t(
+    column.headerLabel ??
+      (typeof column.header === "string" && column.header
+        ? column.header
+        : column.accessorKey),
+  );
 
 const calculateColumnCounts = <TData, TValue>(
   columns: LangfuseColumnDef<TData, TValue>[],

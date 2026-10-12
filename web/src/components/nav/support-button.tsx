@@ -1,3 +1,4 @@
+import { t } from "@/src/features/i18n";
 import { LifeBuoy } from "lucide-react";
 import { SidebarMenuButton, useSidebar } from "@/src/components/ui/sidebar";
 import { useSupportDrawer } from "@/src/features/support-chat";
@@ -25,7 +26,7 @@ export const SupportButton = () => {
       }}
     >
       <LifeBuoy className="h-4 w-4" />
-      Support
+      {t("Support")}
     </SidebarMenuButton>
   );
 };

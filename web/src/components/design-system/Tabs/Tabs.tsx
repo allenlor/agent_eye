@@ -5,6 +5,7 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cva, type VariantProps } from "class-variance-authority";
 import { type LucideIcon } from "lucide-react";
 
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 
 const tabsListVariants = cva(
@@ -283,7 +284,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       value={value}
       disabled={disabled}
-      title={label ?? title}
+      title={label != null ? t(label) : title}
       className={cn(
         tabsTriggerVariants({ size, variant }),
         slidingIndicator &&
@@ -292,8 +293,8 @@ function TabsTrigger({
     >
       {Icon ? <Icon aria-hidden="true" className="size-3.5 shrink-0" /> : null}
       {label !== undefined ? (
-        <span className="min-w-0 truncate" title={label}>
-          {label}
+        <span className="min-w-0 truncate" title={t(label)}>
+          {t(label)}
         </span>
       ) : (
         children

@@ -14,6 +14,7 @@ import React, {
 import DocPopup from "@/src/components/layouts/doc-popup";
 import { DataTablePagination } from "@/src/components/table/data-table-pagination";
 import { shouldIgnoreRowClickTarget } from "@/src/components/table/shouldIgnoreRowClickTarget";
+import { localizeHeader, t } from "@/src/features/i18n";
 import { getPlainTextFromReactNode } from "@/src/utils/react-node-plain-text";
 import {
   type CustomHeights,
@@ -565,7 +566,7 @@ export function DataTable<TData extends object, TValue>({
                               // header can carry more than the column's name.
                               <div className="min-w-0 flex-1 leading-normal">
                                 {flexRender(
-                                  header.column.columnDef.header,
+                                  localizeHeader(header.column.columnDef.header),
                                   header.getContext(),
                                 )}
                               </div>
@@ -574,13 +575,13 @@ export function DataTable<TData extends object, TValue>({
                                 className="truncate leading-normal"
                                 title={getPlainTextFromReactNode(
                                   flexRender(
-                                    header.column.columnDef.header,
+                                    localizeHeader(header.column.columnDef.header),
                                     header.getContext(),
                                   ),
                                 )}
                               >
                                 {flexRender(
-                                  header.column.columnDef.header,
+                                  localizeHeader(header.column.columnDef.header),
                                   header.getContext(),
                                 )}
                               </span>
@@ -1042,7 +1043,7 @@ function TableBodyComponent<TData>({
             <div className="pointer-events-none absolute left-[50%] flex -translate-x-1/2 -translate-y-1/2 items-center justify-center text-center">
               {noResultsMessage ?? (
                 <>
-                  No results.{" "}
+                  {t("No results.")}{" "}
                   {help && (
                     <DocPopup description={help.description} href={help.href} />
                   )}

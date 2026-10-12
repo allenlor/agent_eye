@@ -1,3 +1,4 @@
+import { t } from "@/src/features/i18n";
 import { CalendarDays } from "lucide-react";
 import { SidebarMenuButton } from "@/src/components/ui/sidebar";
 import Link from "next/link";
@@ -17,7 +18,7 @@ export const BookACallButton = () => {
         }}
       >
         <CalendarDays className="h-4 w-4" />
-        Book a call
+        {t("Book a call")}
       </Link>
     </SidebarMenuButton>
   );

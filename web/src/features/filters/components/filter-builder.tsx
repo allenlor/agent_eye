@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @repo/no-style-props */
 import { Button } from "@/src/components/ui/button";
+import { isUiChinese, t } from "@/src/features/i18n";
 import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
 import {
@@ -393,7 +394,9 @@ export function InlineFilterState({
       }
       if (filter.type === "stringOptions" || filter.type === "arrayOptions") {
         if (filter.value.length > 2) {
-          return `${filter.value.length} selected`;
+          return isUiChinese()
+            ? `已选 ${filter.value.length} 项`
+            : `${filter.value.length} selected`;
         }
 
         return filter.value.join(", ");
@@ -421,7 +424,7 @@ export function InlineFilterState({
       >
         <FilterToken deactivated={false} title={undefined}>
           <span className="text-qlang-field">{column}</span>{" "}
-          <span className="text-muted-foreground">{filter.operator}</span>
+          <span className="text-muted-foreground">{t(filter.operator)}</span>
           {value !== "" ? (
             <>
               {" "}
@@ -690,7 +693,7 @@ function FilterBuilderForm({
       column?.type === "string" &&
       columnsWithCustomSelect.includes(column.id) &&
       column.options !== undefined;
-    const columnLabel = column ? column.name : "Column";
+    const columnLabel = t(column ? column.name : "Column");
     const columnsForPicker = getColumnOptionsForFilterRow(
       columns,
       filter.column,
@@ -771,7 +774,7 @@ function FilterBuilderForm({
                           option.id === column?.id ? "visible" : "invisible",
                         )}
                       />
-                      <span className="flex-1">{option.name}</span>
+                      <span className="flex-1">{t(option.name)}</span>
                       {hasAlert && (
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -871,7 +874,7 @@ function FilterBuilderForm({
           <SelectContent>
             {column?.options.map((option) => (
               <SelectItem key={option.label} value={option.label}>
-                {option.label}
+                {t(option.label)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -900,10 +903,10 @@ function FilterBuilderForm({
             <SelectValue placeholder="" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="first">1st</SelectItem>
-            <SelectItem value="last">last</SelectItem>
-            <SelectItem value="nthFromStart">nth from start</SelectItem>
-            <SelectItem value="nthFromEnd">nth from end</SelectItem>
+            <SelectItem value="first">{t("1st")}</SelectItem>
+            <SelectItem value="last">{t("last")}</SelectItem>
+            <SelectItem value="nthFromStart">{t("nth from start")}</SelectItem>
+            <SelectItem value="nthFromEnd">{t("nth from end")}</SelectItem>
           </SelectContent>
         </Select>
       ) : null;
@@ -944,7 +947,7 @@ function FilterBuilderForm({
           {filter.type !== undefined
             ? filterOperators[filter.type].map((option) => (
                 <SelectItem key={option} value={option}>
-                  {option}
+                  {t(option)}
                 </SelectItem>
               ))
             : null}
@@ -1083,7 +1086,7 @@ function FilterBuilderForm({
         <SelectContent>
           {["true", "false"].map((option) => (
             <SelectItem key={option} value={option}>
-              {option}
+              {t(option)}
             </SelectItem>
           ))}
         </SelectContent>

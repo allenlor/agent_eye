@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
+import { t } from "@/src/features/i18n";
 
 type TableViewPresetsButtonProps = Pick<
   ComponentProps<typeof Button>,
@@ -25,9 +26,9 @@ export function TableViewPresetsButton({
   count,
   ...props
 }: TableViewPresetsButtonProps) {
-  const label = selectedView?.name ?? "My Views";
+  const label = selectedView?.name ?? t("My Views");
   const title = selectedView?.defaultLabel
-    ? `${label} (${selectedView.defaultLabel})`
+    ? `${label} (${t(selectedView.defaultLabel)})`
     : label;
 
   return (

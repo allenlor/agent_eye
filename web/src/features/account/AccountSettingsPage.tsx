@@ -35,6 +35,7 @@ import Link from "next/link";
 import { showSuccessToast, showErrorToast } from "@/src/features/notifications";
 import { useV4UpgradeUiFlag } from "@/src/features/v4-migration/useV4UpgradeUiEnabled";
 import { ConfirmationDialogController } from "@/src/components/design-system/ConfirmationDialogController/ConfirmationDialogController";
+import { t } from "@/src/features/i18n";
 
 const displayNameSchema = z.object({
   name: StringNoHTML.min(1, "Name cannot be empty").max(
@@ -84,7 +85,7 @@ function UpdateDisplayName() {
           </p>
         ) : (
           <p className="text-primary mb-4 text-sm">
-            Your display name is currently &quot;
+            {t("Your display name is currently")} &quot;
             <b>{session?.user?.name ?? ""}</b>
             &quot;.
           </p>
@@ -328,7 +329,7 @@ const getAccountSettingsPages = ({
           <Header title="Email" />
           <Card className="p-3">
             <p className="text-primary text-sm">
-              Your email address: <b>{userEmail}</b>
+              {t("Your email address:")} <b>{userEmail}</b>
             </p>
           </Card>
         </div>
@@ -337,8 +338,9 @@ const getAccountSettingsPages = ({
           <Header title="Password" />
           <Card className="p-3">
             <p className="text-primary mb-4 text-sm">
-              To change your password, we will email a one-time code to your
-              address. Enter the code together with your new password.
+              {t(
+                "To change your password, we will email a one-time code to your address. Enter the code together with your new password.",
+              )}
             </p>
             <Button asChild variant="secondary">
               <Link href="/auth/reset-password">Change Password</Link>

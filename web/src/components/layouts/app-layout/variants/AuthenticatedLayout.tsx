@@ -37,6 +37,7 @@ import {
   useLangfuseCloudRegion,
 } from "@/src/features/organizations";
 import type { Session } from "next-auth";
+import { t } from "@/src/features/i18n";
 import type { NavigationItem } from "@/src/components/layouts/utilities/routes";
 import type { RouteGroup } from "@/src/components/layouts/routes";
 import dynamic from "next/dynamic";
@@ -225,9 +226,9 @@ export function AuthenticatedLayout({
             subItems: regionMenuItems,
             content: (
               <>
-                Regions
+                {t("Regions")}
                 <div className="ml-2 inline-flex rounded bg-black/5 p-1 text-xs dark:bg-white/10">
-                  Current: {currentRegion}
+                  {t("Current:")} {currentRegion}
                 </div>
               </>
             ),

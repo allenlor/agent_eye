@@ -1,4 +1,5 @@
 import { ActionButton } from "@/src/components/ActionButton";
+import { t } from "@/src/features/i18n";
 import { BadgeCheck, X } from "lucide-react";
 
 export type SuccessNotificationProps = {
@@ -23,18 +24,18 @@ export const SuccessNotification: React.FC<SuccessNotificationProps> = ({
         <div className="flex items-center gap-2">
           <BadgeCheck size={20} className="text-primary-foreground" />
           <div className="text-primary-foreground m-0 text-sm leading-tight font-bold">
-            {title}
+            {t(title)}
           </div>
         </div>
         {description && (
           <div className="text-primary-foreground text-sm leading-tight">
-            {description}
+            {t(description)}
           </div>
         )}
         {link && (
           <div className="self-start">
             <ActionButton href={link.href} size="sm" variant="secondary">
-              {link.text}
+              {t(link.text)}
             </ActionButton>
           </div>
         )}

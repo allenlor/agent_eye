@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { Button } from "@/src/components/ui/button";
+import { t } from "@/src/features/i18n";
 import { AlertCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -37,8 +38,8 @@ export const ErrorPage = ({
   return (
     <div className="flex h-full flex-col items-center justify-center">
       <AlertCircle className="text-dark-red mb-4 h-12 w-12" />
-      <h1 className="mb-4 text-xl font-bold">{title}</h1>
-      <p className="mb-6 text-center">{message}</p>
+      <h1 className="mb-4 text-xl font-bold">{t(title)}</h1>
+      <p className="mb-6 text-center">{t(message)}</p>
       <div className="flex gap-3">
         {session.status === "unauthenticated" ? (
           <Button
@@ -50,11 +51,13 @@ export const ErrorPage = ({
         {additionalButton ? (
           "onClick" in additionalButton ? (
             <Button variant="secondary" onClick={additionalButton.onClick}>
-              {additionalButton.label}
+              {t(additionalButton.label)}
             </Button>
           ) : (
             <Button variant="secondary" asChild>
-              <Link href={additionalButton.href}>{additionalButton.label}</Link>
+              <Link href={additionalButton.href}>
+                {t(additionalButton.label)}
+              </Link>
             </Button>
           )
         ) : null}

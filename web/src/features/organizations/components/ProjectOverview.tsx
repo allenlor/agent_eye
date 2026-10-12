@@ -23,6 +23,7 @@ import { Input } from "@/src/components/ui/input";
 import { useHasOrganizationAccess } from "@/src/features/rbac";
 import { env } from "@/src/env.mjs";
 import { Fragment } from "react";
+import { t } from "@/src/features/i18n";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import {
@@ -130,7 +131,7 @@ const OrganizationProjectTiles = ({
               )}
               {project.deletedAt && (
                 <CardContent>
-                  <CardDescription>Project is being deleted</CardDescription>
+                  <CardDescription>{t("Project is being deleted")}</CardDescription>
                 </CardContent>
               )}
             </Card>
@@ -154,7 +155,7 @@ const OrganizationProjectTiles = ({
                 </CardFooter>
               ) : (
                 <CardContent>
-                  <CardDescription>Project is being deleted</CardDescription>
+                  <CardDescription>{t("Project is being deleted")}</CardDescription>
                 </CardContent>
               )}
             </Card>
@@ -437,14 +438,18 @@ const Onboarding = () => {
     <Card className="mt-5">
       <CardHeader>
         <CardTitle data-testid="create-new-project-title">
-          Get Started
+          {t("Get Started")}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <CardDescription>
           {canCreateOrgs
-            ? "Create an organization to get started. Alternatively, ask your organization admin to invite you."
-            : "You need to get invited to an organization to get started with Langfuse."}
+            ? t(
+                "Create an organization to get started. Alternatively, ask your organization admin to invite you.",
+              )
+            : t(
+                "You need to get invited to an organization to get started with Langfuse.",
+              )}
         </CardDescription>
       </CardContent>
       <CardFooter className="flex gap-4">

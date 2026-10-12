@@ -1,4 +1,5 @@
 /* eslint-disable @repo/no-style-props, @repo/no-margin-on-root-elements */
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -66,7 +67,7 @@ export const PageTabs = ({
                 className={tabClassName}
                 onClick={tab.onClick}
               >
-                {tab.label}
+                {t(tab.label)}
               </Link>
             );
           }
@@ -80,7 +81,7 @@ export const PageTabs = ({
                 className={tabClassName}
                 disabled={tab.disabled}
               >
-                {tab.label}
+                {t(tab.label)}
               </button>
             );
           }

@@ -7,6 +7,7 @@ import { Dialog } from "@/src/components/design-system/Dialog/Dialog";
 import { DialogController } from "@/src/components/design-system/DialogController/DialogController";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
+import { t } from "@/src/features/i18n";
 
 type ConfirmationDialogValueCallback<TValue, TResult> = [TValue] extends [
   undefined,
@@ -104,7 +105,7 @@ function ConfirmationDialogController<TValue = undefined>({
           ]}
         >
           <Dialog.Body>
-            <p className="text-muted-foreground text-sm">{resolvedText}</p>
+            <p className="text-muted-foreground text-sm">{t(resolvedText)}</p>
             {error ? (
               <div className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                 <p className="font-bold">Error:</p>

@@ -1,3 +1,4 @@
+import { t } from "@/src/features/i18n";
 import {
   type CloudRegionName,
   isRegionProduction,
@@ -66,23 +67,34 @@ const defaultMetadata: PageMetadata = { title: "Langfuse" };
  * `pathname` is the Next.js route (no query string), which is what makes the
  * canonical drop `?targetPath=`.
  */
+function localizeMetadata(metadata: PageMetadata): PageMetadata {
+  return {
+    ...metadata,
+    title: t(metadata.title),
+    description: metadata.description ? t(metadata.description) : undefined,
+  };
+}
+
 export function getPageMetadata(
   pathname: string,
   region: CloudRegionName | undefined,
 ): PageMetadata {
   if (!region) {
-    return (
+    return localizeMetadata(
       selfHostedAuthPages[pathname] ??
-      passwordPages[pathname] ??
-      defaultMetadata
+        passwordPages[pathname] ??
+        defaultMetadata,
     );
   }
 
   const metadata = cloudAuthPages[pathname] ?? passwordPages[pathname];
-  if (!metadata) return defaultMetadata;
+  if (!metadata) return localizeMetadata(defaultMetadata);
 
   // Staging and dev share the page but must not point Google at production.
-  if (!isRegionProduction(region)) return metadata;
+  if (!isRegionProduction(region)) return localizeMetadata(metadata);
 
-  return { ...metadata, canonicalUrl: `${CANONICAL_CLOUD_ORIGIN}${pathname}` };
+  return localizeMetadata({
+    ...metadata,
+    canonicalUrl: `${CANONICAL_CLOUD_ORIGIN}${pathname}`,
+  });
 }

@@ -56,10 +56,8 @@ test("Signup input validation", async ({ page }) => {
   await page.fill('input[type="password"]', "shortPw");
   await page.click('button[data-testid="submit-email-password-sign-up-form"]');
   await page.waitForTimeout(2000);
-  await expect(page.getByText("Invalid email")).toBeVisible();
-  await expect(
-    page.getByText("Password must be at least 8 characters long."),
-  ).toBeVisible();
+  await expect(page.getByText("邮箱无效")).toBeVisible();
+  await expect(page.getByText("密码至少需要 8 个字符。")).toBeVisible();
   await page.click('button[data-testid="submit-email-password-sign-up-form"]');
   await page.waitForTimeout(2000);
   // don't see get started page

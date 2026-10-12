@@ -1,5 +1,6 @@
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
+import { t } from "@/src/features/i18n";
 
 export function ColumnVisibilityHeader({
   onRestoreDefaults,
@@ -8,7 +9,7 @@ export function ColumnVisibilityHeader({
 }) {
   return (
     <div className="bg-popover sticky top-0 z-10 flex h-10 items-center justify-between gap-3 border-b px-3">
-      <p className="text-sm font-bold">Columns</p>
+      <p className="text-sm font-bold">{t("Columns")}</p>
       {onRestoreDefaults && (
         <Button
           variant="outline"

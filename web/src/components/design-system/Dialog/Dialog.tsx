@@ -6,6 +6,7 @@ import { X, type LucideIcon } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/src/components/design-system/Button/Button";
+import { t } from "@/src/features/i18n";
 import { useLayerContainer } from "@/src/context/LayerContext/LayerContext";
 import { cn } from "@/src/utils/tailwind";
 
@@ -117,14 +118,14 @@ function DialogRoot({
         <header className="bg-modal sticky top-0 z-30 flex shrink-0 flex-col gap-1 rounded-t-lg p-4">
           <div className="flex w-full items-center justify-between gap-4 text-center sm:text-left">
             <DialogPrimitive.Title className="min-w-0 flex-1 text-lg leading-none font-bold tracking-tight">
-              {title}
+              {t(title)}
             </DialogPrimitive.Title>
             <DialogPrimitive.Close
               className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground hover:bg-accent z-20 -mt-2 -mr-2 inline-flex size-8 shrink-0 items-center justify-center rounded-md opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none"
               tabIndex={-1}
             >
               <X className="size-4" />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{t("Close")}</span>
             </DialogPrimitive.Close>
           </div>
         </header>

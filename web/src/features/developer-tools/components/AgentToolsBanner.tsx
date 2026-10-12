@@ -1,6 +1,7 @@
 import { Callout } from "@/src/components/design-system/Callout/Callout";
 import { DismissController } from "@/src/components/DismissController";
 import { Bot } from "lucide-react";
+import { t } from "@/src/features/i18n";
 
 const DOCS_HREF =
   "https://langfuse.com/docs/api-and-data-platform/features/agent-skill";
@@ -25,10 +26,11 @@ export function AgentToolsBanner() {
               <Bot className="mt-0.5 h-4 w-4 shrink-0 sm:mt-0" />
               <span>
                 <span className="font-bold">
-                  Langfuse works great with your AI coding agents.
+                  {t("Langfuse works great with your AI coding agents.")}
                 </span>{" "}
-                Connect Claude Code, Codex, and other agents to your data with
-                the Langfuse Agent Skill, MCP server, and CLI.
+                {t(
+                  "Connect Claude Code, Codex, and other agents to your data with the Langfuse Agent Skill, MCP server, and CLI.",
+                )}
               </span>
             </div>
           </Callout>

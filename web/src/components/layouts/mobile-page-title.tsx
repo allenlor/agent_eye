@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/src/components/ui/tooltip";
+import { t } from "@/src/features/i18n";
 import { MoreHorizontal } from "lucide-react";
 import { useRef, useState } from "react";
 
@@ -92,7 +93,7 @@ export const MobilePageTitle = ({
             pushing the ⋯ flush against the edge or crushing the icon. Full value
             stays in the title attribute (and the ⋯ menu's Copy row). */}
         <h1
-          title={title}
+          title={t(title)}
           className="text-primary min-w-0 truncate text-base leading-tight font-bold"
         >
           {titleContent ? (
@@ -101,15 +102,15 @@ export const MobilePageTitle = ({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="cursor-help">{title}</span>
+                  <span className="cursor-help">{t(title)}</span>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" className="max-w-xs">
-                  {titleTooltip}
+                  {t(titleTooltip)}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           ) : (
-            <span title={title}>{title}</span>
+            <span title={t(title)}>{t(title)}</span>
           )}
         </h1>
         {/* Help lives OUTSIDE the truncating h1 (like titleBadges): kept inside,
@@ -153,7 +154,7 @@ export const MobilePageTitle = ({
                 variant="outline"
                 size="icon"
                 ref={menuTriggerRef}
-                aria-label="More actions"
+                aria-label={t("More actions")}
                 className="ml-auto shrink-0"
               >
                 <MoreHorizontal className="h-4 w-4" />

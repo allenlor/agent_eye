@@ -5,6 +5,7 @@ import { Combobox } from "@/src/components/ui/combobox";
 import { LangfuseIcon } from "@/src/components/design-system/LangfuseIcon/LangfuseIcon";
 import { Button } from "@/src/components/ui/button";
 import { useHasProjectAccess } from "@/src/features/rbac";
+import { t } from "@/src/features/i18n";
 
 /**
  * Home's dashboard picker: selecting immediately shows ("peeks") the chosen
@@ -46,9 +47,9 @@ export function HomeDashboardSelect({
     const items = dashboards.data?.dashboards ?? [];
     const toOption = (d: { id: string; name: string; owner: string }) => ({
       value: d.id,
-      label: d.name,
+      label: d.owner === "LANGFUSE" ? t(d.name) : d.name,
       ...(d.owner === "LANGFUSE" ? { icon: <LangfuseIcon size={14} /> } : {}),
-      ...(d.id === defaultDashboardId ? { badge: "Default" } : {}),
+      ...(d.id === defaultDashboardId ? { badge: t("Default") } : {}),
     });
     const curated = items.filter((d) => d.owner === "LANGFUSE");
     const project = items.filter((d) => d.owner === "PROJECT");
@@ -77,7 +78,7 @@ export function HomeDashboardSelect({
         className="text-muted-foreground my-0"
       >
         <LayoutDashboard className="mr-1 h-4 w-4" />
-        {currentDashboardName}
+        {t(currentDashboardName)}
       </Button>
     );
   }
@@ -90,9 +91,9 @@ export function HomeDashboardSelect({
         if (typeof id !== "string" || id === value) return;
         onValueChange(id);
       }}
-      placeholder={currentDashboardName}
-      searchPlaceholder="Search dashboards..."
-      emptyText="No dashboards found"
+      placeholder={t(currentDashboardName)}
+      searchPlaceholder={t("Search dashboards...")}
+      emptyText={t("No dashboards found")}
       className="my-0 w-auto max-w-56"
       name="home-dashboard"
     />

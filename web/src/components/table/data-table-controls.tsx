@@ -101,6 +101,7 @@ import {
 import { DataTableAIFilters } from "@/src/components/table/data-table-ai-filters";
 import { useLangfuseCloudRegion } from "@/src/features/organizations";
 import { type FilterState } from "@langfuse/shared";
+import { t } from "@/src/features/i18n";
 
 interface ControlsContextType {
   open: boolean;
@@ -1008,7 +1009,7 @@ export function DataTableControls({
               </Tooltip>
             )}
             {layout !== "inline" && (
-              <span className="text-sm font-bold">Filters</span>
+              <span className="text-sm font-bold">{t("Filters")}</span>
             )}
             {/* Inline: the count already shows on the sheet's Filters trigger
                 and footer, so a bare number here (title hidden) is just noise. */}
@@ -1432,6 +1433,7 @@ function FilterAccordionItem({
   disabledReason,
   onReset,
 }: FilterAccordionItemProps) {
+  const translatedLabel = t(label);
   return (
     <FilterAccordionItemPrimitive
       value={filterKey}
@@ -1460,19 +1462,19 @@ function FilterAccordionItem({
             <Tooltip delayDuration={80}>
               <TooltipTrigger asChild>
                 <span className="flex min-w-0 items-center gap-1">
-                  <span className="min-w-0 truncate" title={label}>
-                    {label}
+                  <span className="min-w-0 truncate" title={translatedLabel}>
+                    {translatedLabel}
                   </span>
                 </span>
               </TooltipTrigger>
               <TooltipContent className="max-w-80 text-xs">
-                {disabledReason}
+                {t(disabledReason)}
               </TooltipContent>
             </Tooltip>
           ) : help ? (
             <div className="flex min-w-0 items-center gap-1">
-              <span className="min-w-0 truncate" title={label}>
-                {label}
+              <span className="min-w-0 truncate" title={translatedLabel}>
+                {translatedLabel}
               </span>
               <DocPopup description={help.description} href={help.href} />
             </div>
@@ -1480,22 +1482,22 @@ function FilterAccordionItem({
             // The tooltip triggers on the ⓘ icon only — hovering the label
             // itself must not pop explanatory text.
             <span className="flex min-w-0 items-center gap-1">
-              <span className="min-w-0 truncate" title={label}>
-                {label}
+              <span className="min-w-0 truncate" title={translatedLabel}>
+                {translatedLabel}
               </span>
               <Tooltip delayDuration={80}>
                 <TooltipTrigger asChild>
                   <InfoIcon className="text-muted-foreground h-3 w-3 shrink-0" />
                 </TooltipTrigger>
                 <TooltipContent className="max-w-80 text-xs">
-                  {tooltip}
+                  {t(tooltip)}
                 </TooltipContent>
               </Tooltip>
             </span>
           ) : (
             <span className="flex min-w-0 items-center gap-1">
-              <span className="min-w-0 truncate" title={label}>
-                {label}
+              <span className="min-w-0 truncate" title={translatedLabel}>
+                {translatedLabel}
               </span>
             </span>
           )}
@@ -1941,7 +1943,9 @@ function CategoricalSelectContent({
               to learn how to add sessions to your {tableName}.
             </span>
           ) : filterKey === "name" ? (
-            <span>No {tableName} names found in the given time range.</span>
+            <span>
+              {t(`No ${tableName} names found in the given time range.`)}
+            </span>
           ) : filterKey === "tags" ? (
             <span>
               Tags let you filter {tableName} according to custom categories
@@ -1957,7 +1961,7 @@ function CategoricalSelectContent({
               to learn how to add tags to your {tableName}.
             </span>
           ) : (
-            "No options found"
+            t("No options found")
           )}
         </div>
       ) : (
@@ -1980,7 +1984,7 @@ function CategoricalSelectContent({
           {/* Checkbox list */}
           {filteredOptions.length === 0 ? (
             <div className="text-muted-foreground py-1 text-center text-sm">
-              No matches found
+              {t("No matches found")}
             </div>
           ) : (
             <>
@@ -2549,8 +2553,8 @@ function FilterModeTabs({ mode, onModeChange }: FilterModeTabsProps) {
         onValueChange={(newMode) => onModeChange(newMode as "select" | "text")}
       >
         <Tabs.List layout="full" size="sm">
-          <Tabs.Trigger value="select" size="sm" label="Select" />
-          <Tabs.Trigger value="text" size="sm" label="Text" />
+          <Tabs.Trigger value="select" size="sm" label={t("Select")} />
+          <Tabs.Trigger value="text" size="sm" label={t("Text")} />
         </Tabs.List>
       </Tabs>
     </div>
@@ -2639,7 +2643,7 @@ function TextFilterSection({
               className="group/textfilter border-border/40 bg-muted/30 flex items-center gap-2 rounded border px-2 py-1 text-xs"
             >
               <span className="text-muted-foreground shrink-0 text-[11px] font-bold">
-                {f.operator === "contains" ? "contains" : "does not contain"}
+                {t(f.operator === "contains" ? "contains" : "does not contain")}
               </span>
               <span
                 className="min-w-0 flex-1 truncate font-bold"
@@ -2691,11 +2695,21 @@ function FilterValueCheckbox({
   disabled = false,
 }: FilterValueCheckboxProps) {
   // Show "All" when clicking would reverse selection (only one item selected)
-  const labelText = checked && totalSelected === 1 ? "All" : "Only";
+  const labelText = t(checked && totalSelected === 1 ? "All" : "Only");
 
-  // Display placeholder for empty strings to ensure clickable area
-  const displayLabel = label === "" ? "(empty)" : label;
-  const displayTitle = title ?? (label === "" ? "(empty)" : label);
+  // Display placeholder for empty strings to ensure clickable area.
+  // Only translate fixed UI tokens. Observation names and other user data
+  // must stay as stored.
+  const rawLabel = label === "" ? "(empty)" : label;
+  const displayLabel =
+    rawLabel === "(empty)" ||
+    rawLabel === "true" ||
+    rawLabel === "false" ||
+    rawLabel === "True" ||
+    rawLabel === "False"
+      ? t(rawLabel)
+      : rawLabel;
+  const displayTitle = title ?? displayLabel;
 
   return (
     <div

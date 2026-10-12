@@ -17,6 +17,7 @@ import {
 import { useSession } from "next-auth/react";
 import { useHasOrganizationAccess } from "@/src/features/rbac";
 import { isCloudPlan, planLabels } from "@langfuse/shared";
+import { t } from "@/src/features/i18n";
 import Link from "next/link";
 import { Badge } from "@/src/components/ui/badge";
 import { OrganizationDropdownMenu } from "@/src/components/OrganizationDropdownMenu/OrganizationDropdownMenu";
@@ -104,9 +105,9 @@ const BreadcrumbComponent = ({
         {items?.map((item, index) => {
           const isCurrentPage = index === items.length - 1;
           const name = item.href ? (
-            <Link href={item.href}>{item.name}</Link>
+            <Link href={item.href}>{t(item.name)}</Link>
           ) : (
-            item.name
+            t(item.name)
           );
           return (
             <Fragment key={index}>

@@ -6,6 +6,7 @@
 import * as React from "react";
 import { Bookmark, Check, Clock, Parentheses, Search } from "lucide-react";
 
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import { ScoreTag } from "@/src/components/score-tag";
 import type {
@@ -102,7 +103,7 @@ export function AutocompleteListbox({
             data-testid="search-bar-autocomplete-section"
             className="text-muted-foreground px-3 pt-1.5 pb-1 text-[10px] tracking-[0.06em] uppercase"
           >
-            {sec.title}
+            {t(sec.title)}
           </div>
           {sec.options.map((o) => (
             <div
@@ -147,7 +148,7 @@ export function AutocompleteListbox({
               )}
               {"detail" in o && o.detail !== undefined && (
                 <span className="text-muted-foreground ml-auto pl-6 font-sans text-[11px]">
-                  {o.detail}
+                  {t(o.detail)}
                 </span>
               )}
             </div>

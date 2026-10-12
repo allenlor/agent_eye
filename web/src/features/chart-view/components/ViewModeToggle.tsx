@@ -1,6 +1,7 @@
 import React from "react";
 import { BarChart3, Table } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/src/components/ui/toggle-group";
+import { t } from "@/src/features/i18n";
 import { type ViewMode } from "../types";
 
 /**
@@ -29,19 +30,19 @@ export const ViewModeToggle = React.memo(function ViewModeToggle({
     >
       <ToggleGroupItem
         value="table"
-        aria-label="Table view"
+        aria-label={t("Table view")}
         className="h-8 gap-1.5 rounded-r-none px-2.5 text-xs"
       >
         <Table className="h-3.5 w-3.5" />
-        Table
+        {t("Table")}
       </ToggleGroupItem>
       <ToggleGroupItem
         value="chart"
-        aria-label="Chart view"
+        aria-label={t("Chart view")}
         className="h-8 gap-1.5 rounded-l-none border-l-0 px-2.5 text-xs"
       >
         <BarChart3 className="h-3.5 w-3.5" />
-        Chart
+        {t("Chart")}
       </ToggleGroupItem>
     </ToggleGroup>
   );

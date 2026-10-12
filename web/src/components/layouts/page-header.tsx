@@ -25,6 +25,7 @@ import {
   PageTabs,
   type PageTabsProps,
 } from "@/src/components/layouts/page-tabs";
+import { t } from "@/src/features/i18n";
 import { cn } from "@/src/utils/tailwind";
 import { type ReactNode } from "react";
 import {
@@ -179,7 +180,9 @@ const PageHeader = ({
             <div className="flex grow flex-wrap items-center md:grow-0">
               <div className="mr-2 flex items-center gap-1.5">
                 {itemType && (
-                  <Badge text={getItemTypeLabels(itemType).displayLabel} />
+                  <Badge
+                    text={t(getItemTypeLabels(itemType).displayLabel)}
+                  />
                 )}
                 <div className="relative inline-block max-w-md md:max-w-none">
                   {/* Explicit color: the SidebarProvider shell sets
@@ -198,28 +201,32 @@ const PageHeader = ({
                               className="cursor-help wrap-break-word"
                               data-testid="page-header-title"
                             >
-                              {title}
+                              {t(title)}
                             </span>
                           </TooltipTrigger>
                           <TooltipContent side="bottom" className="max-w-xs">
-                            {titleTooltip}
+                            {t(titleTooltip)}
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     ) : (
                       <span
                         className="wrap-break-word"
-                        title={title}
+                        title={t(title)}
                         data-testid="page-header-title"
                       >
-                        {title}
+                        {t(title)}
                       </span>
                     )}
                     {help && (
                       <span className="whitespace-nowrap">
                         &nbsp;
                         <DocPopup
-                          description={help.description}
+                          description={
+                            typeof help.description === "string"
+                              ? t(help.description)
+                              : help.description
+                          }
                           href={help.href}
                           className={help.className}
                         />

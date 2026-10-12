@@ -1,4 +1,5 @@
 import { Button } from "@/src/components/ui/button";
+import { t } from "@/src/features/i18n";
 import {
   Form,
   FormControl,
@@ -308,7 +309,7 @@ function StandardSignupFlow({
           </Button>
           {formError ? (
             <div className="text-destructive text-center text-sm font-bold">
-              {formError}
+              {t(formError)}
             </div>
           ) : null}
         </form>
@@ -452,7 +453,7 @@ function VerifiedSignupFlow({
           </Button>
           {formError ? (
             <div className="text-destructive text-center text-sm font-bold">
-              {formError}
+              {t(formError)}
             </div>
           ) : null}
         </form>
@@ -480,12 +481,12 @@ function SignupPageShell({ children }: { children: React.ReactNode }) {
             <LangfuseIcon alt="" />
           </div>
           <h2 className="text-primary mt-4 text-center text-2xl leading-9 font-bold tracking-tight">
-            Create new account
+            {t("Create new account")}
           </h2>
         </div>
         {isLangfuseCloud ? (
           <div className="text-center sm:mx-auto sm:w-full sm:max-w-[480px]">
-            No credit card required.
+            {t("No credit card required.")}
           </div>
         ) : null}
 
@@ -506,12 +507,12 @@ function SignupFooter() {
   const router = useRouter();
   return (
     <p className="text-muted-foreground mt-10 text-center text-sm">
-      Already have an account?{" "}
+      {t("Already have an account?")}{" "}
       <Link
         href={`/auth/sign-in${router.asPath.includes("?") ? router.asPath.substring(router.asPath.indexOf("?")) : ""}`}
         className="text-link hover:text-link-hover font-bold"
       >
-        Sign in
+        {t("Sign in")}
       </Link>
     </p>
   );

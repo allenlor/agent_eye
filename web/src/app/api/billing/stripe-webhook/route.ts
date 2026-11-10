@@ -1,5 +1,7 @@
-import { stripeWebhookHandler } from "@/src/ee/features/billing/server/stripe/stripeWebhookHandler";
+import { notAvailableResponse } from "@/src/commercial/notAvailable";
 
 export const dynamic = "force-dynamic";
 
-export const POST = stripeWebhookHandler;
+export function POST() {
+  return notAvailableResponse();
+}

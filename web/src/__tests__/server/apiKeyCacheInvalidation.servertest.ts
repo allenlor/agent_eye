@@ -15,27 +15,13 @@ import {
   describe,
   expect,
   it,
-  vi,
 } from "vitest";
 
-// organizations.delete cancels Stripe before deleting; the test env has a cloud
-// region but no Stripe, so force the self-hosted path to reach the eviction.
-vi.mock("@/src/ee/features/billing/utils/isCloudBillingEnabled", () => ({
-  isCloudBillingEnabled: () => false,
-}));
-vi.mock("@/src/ee/features/billing/server", async (importOriginal) => {
-  const actual = (await importOriginal()) as Record<string, unknown>;
-  return {
-    ...actual,
-    isCloudBillingEnabled: () => false,
-  };
-});
-
+import { handleDeleteOrganization } from "@/src/commercial/adminOrganizations";
+import { deleteProject } from "@/src/commercial/projectAdmin";
 import { appRouter } from "@/src/server/api/root";
 import { createInnerTRPCContext } from "@/src/server/api/trpc";
 import { env } from "@/src/env.mjs";
-import { handleDeleteProject } from "@/src/ee/features/admin-api/server/projects/projectById";
-import { handleDeleteOrganization } from "@/src/ee/features/admin-api/server/organizations/organizationById";
 import {
   createRedisTestClient,
   ensureRedisReady,
@@ -252,10 +238,7 @@ describe("API-key cache invalidation on project/org lifecycle", () => {
     });
 
     const res = makeRes();
-    await handleDeleteProject({} as any, res, projectId, {
-      orgId,
-      apiKeyId: "ADMIN_KEY",
-    } as any);
+    await deleteProject(orgId, projectId, "ADMIN_KEY", res);
 
     expect(res.statusCode).toBe(409);
     expect(res.body).toEqual({
@@ -274,10 +257,7 @@ describe("API-key cache invalidation on project/org lifecycle", () => {
     const keys = await seedOrgScopedKey(orgId);
 
     const res = makeRes();
-    await handleDeleteProject({} as any, res, projectId, {
-      orgId,
-      apiKeyId: "ADMIN_KEY",
-    } as any);
+    await deleteProject(orgId, projectId, "ADMIN_KEY", res);
 
     expect(res.statusCode).toBe(202);
     expect(await survivingKeys(keys)).toEqual([]);
@@ -288,10 +268,7 @@ describe("API-key cache invalidation on project/org lifecycle", () => {
     const keys = await seedOrgScopedKey(orgId);
 
     const res = makeRes();
-    await handleDeleteOrganization(
-      { query: { organizationId: orgId } } as any,
-      res,
-    );
+    await handleDeleteOrganization(orgId, res);
 
     expect(res.statusCode).toBe(200);
     expect(await survivingKeys(keys)).toEqual([]);

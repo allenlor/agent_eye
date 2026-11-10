@@ -1,5 +1,7 @@
-import { chbMetricsApiHandler } from "@/src/ee/features/billing/server/chb/chbMetricsApiHandler";
+import { notAvailableResponse } from "@/src/commercial/notAvailable";
 
 export const dynamic = "force-dynamic";
 
-export const GET = chbMetricsApiHandler;
+export function GET() {
+  return notAvailableResponse();
+}

@@ -1,4 +1,4 @@
-import { mapStripeProductIdToPlan } from "@/src/ee/features/billing/utils/stripeCatalogue";
+import { mapStripeProductIdToPlan } from "@/src/commercial/billingServer";
 import { env } from "@/src/env.mjs";
 import {
   chbPlanCodeToPlan,

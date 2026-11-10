@@ -3,11 +3,13 @@ import {
   createAndAddApiKeysToDb,
   createOrgProjectAndApiKey,
 } from "@langfuse/shared/src/server";
-import { handleGetApiKeys as handleGetProjectApiKeys } from "@/src/ee/features/admin-api/server/projects/projectById/apiKeys";
-import { handleDeleteApiKey as handleDeleteProjectApiKey } from "@/src/ee/features/admin-api/server/projects/projectById/apiKeys/apiKeyById";
-import { handleGetApiKeys as handleGetOrganizationApiKeys } from "@/src/ee/features/admin-api/server/organizations/apiKeys";
-import { handleDeleteApiKey as handleDeleteOrganizationApiKey } from "@/src/ee/features/admin-api/server/organizations/apiKeys/apiKeyById";
-import type { NextApiRequest, NextApiResponse } from "next";
+import {
+  deleteOrganizationApiKey,
+  deleteProjectApiKey,
+  listOrganizationApiKeys,
+  listProjectApiKeys,
+} from "@/src/commercial/apiKeysAdmin";
+import type { NextApiResponse } from "next";
 
 function createMockResponse() {
   const response = {
@@ -52,7 +54,7 @@ describe("public API key list filters", () => {
     });
 
     const response = createMockResponse();
-    await handleGetProjectApiKeys({} as NextApiRequest, response, projectId);
+    await listProjectApiKeys(projectId, response);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.apiKeys.map((key) => key.id)).toContain(visibleKey.id);
@@ -83,7 +85,7 @@ describe("public API key list filters", () => {
     });
 
     const response = createMockResponse();
-    await handleGetOrganizationApiKeys({} as NextApiRequest, response, orgId);
+    await listOrganizationApiKeys(orgId, response);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.apiKeys.map((key) => key.id)).toContain(visibleKey.id);
@@ -96,7 +98,7 @@ describe("public API key list filters", () => {
   });
 
   it("does not delete project in-app agent keys via admin API handler", async () => {
-    const { projectId, orgId } = await createOrgProjectAndApiKey();
+    const { projectId } = await createOrgProjectAndApiKey();
     const inAppAgentKey = await createAndAddApiKeysToDb({
       prisma,
       entityId: projectId,
@@ -105,13 +107,7 @@ describe("public API key list filters", () => {
     });
 
     const response = createMockResponse();
-    await handleDeleteProjectApiKey(
-      {} as NextApiRequest,
-      response,
-      projectId,
-      inAppAgentKey.id,
-      orgId,
-    );
+    await deleteProjectApiKey(projectId, inAppAgentKey.id, response);
 
     expect(response.statusCode).toBe(404);
     await expect(
@@ -129,12 +125,7 @@ describe("public API key list filters", () => {
     });
 
     const response = createMockResponse();
-    await handleDeleteOrganizationApiKey(
-      {} as NextApiRequest,
-      response,
-      orgId,
-      inAppAgentKey.id,
-    );
+    await deleteOrganizationApiKey(orgId, inAppAgentKey.id, response);
 
     expect(response.statusCode).toBe(404);
     await expect(

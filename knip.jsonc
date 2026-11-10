@@ -65,9 +65,6 @@
         "https-proxy-agent",
       ],
     },
-    "ee": {
-      "project": ["src/**/*.ts"],
-    },
     "packages/in-app-agent-sandbox-runtime": {
       "entry": ["src/server.ts"],
       "project": ["src/**/*.ts", "tests/**/*.ts"],

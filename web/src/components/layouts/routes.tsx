@@ -35,7 +35,7 @@ import { KeyboardShortcut } from "@/src/components/design-system/KeyboardShortcu
 import { useCommandMenu } from "@/src/features/command-k-menu/CommandMenuProvider";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
 import { CloudStatusMenu } from "@/src/features/cloud-status-notification/components/CloudStatusMenu";
-import { type ProductModule } from "@/src/ee/features/ui-customization/productModuleSchema";
+import { type ProductModule } from "@/src/commercial/uiCustomization";
 import { matchesPathname } from "@/src/components/layouts/app-layout/utils/pathClassification";
 import { t } from "@/src/features/i18n";
 

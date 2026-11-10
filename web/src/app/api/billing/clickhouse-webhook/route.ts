@@ -1,5 +1,7 @@
-import { chbWebhookHandler } from "@/src/ee/features/billing/server/chb/chbWebhookHandler";
+import { notAvailableResponse } from "@/src/commercial/notAvailable";
 
 export const dynamic = "force-dynamic";
 
-export const POST = chbWebhookHandler;
+export function POST() {
+  return notAvailableResponse();
+}

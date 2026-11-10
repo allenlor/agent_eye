@@ -1,11 +1,12 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { logger } from "@langfuse/shared/src/server";
-import { AdminApiAuthService } from "@/src/ee/features/admin-api/server";
 import {
-  handleGetOrganizationById,
-  handleUpdateOrganization,
   handleDeleteOrganization,
-} from "@/src/ee/features/admin-api/server/organizations/organizationById";
+  handleGetOrganization,
+  handleUpdateOrganization,
+} from "@/src/commercial/adminOrganizations";
+import { AdminApiAuthService } from "@/src/commercial/adminApiAuth";
+import { routeParam } from "@/src/commercial/notAvailable";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import { getSelfHostedInstancePlanServerSide } from "@/src/features/entitlements/server/getPlan";
 
@@ -21,7 +22,7 @@ export default async function handler(
 
     if (
       !hasEntitlementBasedOnPlan({
-        plan: getSelfHostedInstancePlanServerSide(),
+        plan: getSelfHostedInstancePlanServerSide() ?? "oss",
         entitlement: "admin-api",
       })
     ) {
@@ -30,18 +31,23 @@ export default async function handler(
       });
     }
 
-    // Handle different HTTP methods
-    switch (req.method) {
-      case "GET":
-        return await handleGetOrganizationById(req, res);
-      case "PUT":
-        return await handleUpdateOrganization(req, res);
-      case "DELETE":
-        return await handleDeleteOrganization(req, res);
-      default:
-        res.status(405).json({ error: "Method Not Allowed" });
-        return;
+    if (!req.method || !["GET", "PUT", "DELETE"].includes(req.method)) {
+      res.status(405).json({ error: "Method Not Allowed" });
+      return;
     }
+
+    const organizationId = routeParam(req.query, "organizationId");
+    if (!organizationId) {
+      return res.status(400).json({ error: "Invalid request parameters" });
+    }
+
+    if (req.method === "GET") {
+      return handleGetOrganization(organizationId, res);
+    }
+    if (req.method === "PUT") {
+      return handleUpdateOrganization(organizationId, req, res);
+    }
+    return handleDeleteOrganization(organizationId, res);
   } catch (e) {
     logger.error("Failed to process organization request", e);
     res.status(500).json({ error: "Internal server error" });

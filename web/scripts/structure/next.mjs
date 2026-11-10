@@ -48,9 +48,7 @@ const NO_ROLLUP = new Set([12]);
 // Too coarse to ever be one PR — never offered as items themselves.
 const NON_CANDIDATES = new Set([
   "src",
-  "src/ee",
   "src/features",
-  "src/ee/features",
   "src/components",
   "src/pages",
   "src/app",
@@ -66,7 +64,7 @@ const NON_CANDIDATES = new Set([
 
 /** @type {(p: string) => string | null} */
 const featureRoot = (p) => {
-  const m = p.match(/^src\/(?:ee\/)?features\/[^/]+/);
+  const m = p.match(/^src\/features\/[^/]+/);
   return m ? m[0] : null;
 };
 

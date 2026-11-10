@@ -481,8 +481,11 @@ function SignupPageShell({ children }: { children: React.ReactNode }) {
             <LangfuseIcon alt="" />
           </div>
           <h2 className="text-primary mt-4 text-center text-2xl leading-9 font-bold tracking-tight">
-            {t("Create new account")}
+            AgentEye
           </h2>
+          <p className="text-muted-foreground mt-2 text-center text-sm">
+            {t("Create new account")}
+          </p>
         </div>
         {isLangfuseCloud ? (
           <div className="text-center sm:mx-auto sm:w-full sm:max-w-[480px]">

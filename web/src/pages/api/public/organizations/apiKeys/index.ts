@@ -1,7 +1,7 @@
 import { cors, runMiddleware } from "@/src/features/public-api/server/cors";
 import { logger } from "@langfuse/shared/src/server";
 import { RateLimitService } from "@/src/features/public-api/server/RateLimitService";
-import { handleGetApiKeys } from "@/src/ee/features/admin-api/server/organizations/apiKeys";
+import { listOrganizationApiKeys } from "@/src/commercial/apiKeysAdmin";
 import { shadowAuth, writeOrgError } from "@/src/features/public-api/server";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
@@ -50,16 +50,5 @@ export default async function handler(
     return rateLimitCheck.sendRestResponseIfLimited(res);
   }
 
-  // Route to the handler
-  try {
-    return handleGetApiKeys(req, res, authCheck.scope.orgId);
-  } catch (error) {
-    logger.error(
-      `Error handling organization API keys for ${req.method}`,
-      error,
-    );
-    return res.status(500).json({
-      error: "Internal server error",
-    });
-  }
+  return listOrganizationApiKeys(authCheck.scope.orgId, res);
 }

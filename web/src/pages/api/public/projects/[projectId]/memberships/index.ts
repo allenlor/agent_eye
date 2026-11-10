@@ -3,10 +3,10 @@ import { prisma } from "@langfuse/shared/src/db";
 import { logger } from "@langfuse/shared/src/server";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import {
-  handleGetMemberships,
-  handleUpdateMembership,
-  handleDeleteMembership,
-} from "@/src/ee/features/admin-api/server/projects/projectById/memberships";
+  deleteProjectMembership,
+  listProjectMemberships,
+  upsertProjectMembership,
+} from "@/src/commercial/membershipAdmin";
 
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { shadowAuth, writeOrgError } from "@/src/features/public-api/server";
@@ -82,38 +82,17 @@ export default async function handler(
     });
   }
 
-  // Route to the appropriate handler based on HTTP method
-  try {
-    switch (req.method) {
-      case "GET":
-        return handleGetMemberships(req, res, projectId, authCheck.scope.orgId);
-      case "PUT":
-        return handleUpdateMembership(
-          req,
-          res,
-          projectId,
-          authCheck.scope.orgId,
-        );
-      case "DELETE":
-        return handleDeleteMembership(
-          req,
-          res,
-          projectId,
-          authCheck.scope.orgId,
-        );
-      default:
-        // This should never happen due to the check at the beginning
-        return res.status(405).json({
-          error: "Method not allowed",
-        });
-    }
-  } catch (error) {
-    logger.error(
-      `Error handling project memberships for ${req.method} on project ${projectId}`,
-      error,
-    );
-    return res.status(500).json({
-      error: "Internal server error",
-    });
+  if (req.method === "GET") {
+    return listProjectMemberships(projectId, res);
   }
+  if (req.method === "PUT") {
+    return upsertProjectMembership(
+      authCheck.scope.orgId,
+      projectId,
+      authCheck.scope.apiKeyId,
+      req,
+      res,
+    );
+  }
+  return deleteProjectMembership(projectId, req, res);
 }

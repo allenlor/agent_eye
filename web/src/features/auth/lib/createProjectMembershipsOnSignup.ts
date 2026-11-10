@@ -7,7 +7,7 @@ import {
   hasEntitlementBasedOnPlan,
 } from "@/src/features/entitlements/server";
 import { shouldAutoEnableV4 } from "@/src/features/events/lib/v4Rollout";
-import { getSfdcService } from "@/src/ee/features/sfdc-sync/server";
+import { getSfdcService } from "@/src/commercial/sfdc";
 import { canCreateOrganizations } from "@/src/features/organizations/server";
 import { provisionStarterOrganizationForNewUser } from "@/src/features/onboarding/server";
 import { projectRoleAccessRights } from "@langfuse/shared";

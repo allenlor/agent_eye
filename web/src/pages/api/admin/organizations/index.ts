@@ -1,10 +1,10 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { logger } from "@langfuse/shared/src/server";
-import { AdminApiAuthService } from "@/src/ee/features/admin-api/server";
 import {
-  handleGetOrganizations,
   handleCreateOrganization,
-} from "@/src/ee/features/admin-api/server/organizations";
+  handleGetOrganizations,
+} from "@/src/commercial/adminOrganizations";
+import { AdminApiAuthService } from "@/src/commercial/adminApiAuth";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import { getSelfHostedInstancePlanServerSide } from "@/src/features/entitlements/server/getPlan";
 
@@ -25,7 +25,7 @@ export default async function handler(
 
     if (
       !hasEntitlementBasedOnPlan({
-        plan: getSelfHostedInstancePlanServerSide(),
+        plan: getSelfHostedInstancePlanServerSide() ?? "oss",
         entitlement: "admin-api",
       })
     ) {
@@ -34,15 +34,8 @@ export default async function handler(
       });
     }
 
-    // For GET requests, return all organizations
-    if (req.method === "GET") {
-      return await handleGetOrganizations(req, res);
-    }
-
-    // For POST requests, create a new organization
-    if (req.method === "POST") {
-      return await handleCreateOrganization(req, res);
-    }
+    if (req.method === "GET") return handleGetOrganizations(req, res);
+    return handleCreateOrganization(req, res);
   } catch (e) {
     logger.error("Failed to process organization request", e);
     res.status(500).json({ error: "Internal server error" });

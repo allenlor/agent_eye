@@ -23,7 +23,7 @@ import {
   getUserProjectRolesCount,
 } from "@langfuse/shared/src/server";
 import { env } from "@/src/env.mjs";
-import { getSfdcService } from "@/src/ee/features/sfdc-sync/server";
+import { getSfdcService } from "@/src/commercial/sfdc";
 import {
   createWithinEntitlementLimit,
   hasEntitlement,

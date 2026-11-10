@@ -340,7 +340,7 @@ export const env = createEnv({
     LANGFUSE_UI_DEFAULT_BASE_URL_ANTHROPIC: z.url().optional(),
     LANGFUSE_UI_DEFAULT_BASE_URL_AZURE: z.url().optional(),
     // JSON array of {name, url} objects; validated lazily in
-    // web/src/ee/features/ui-customization/instanceLinks.ts so a bad value
+    // web/src/commercial/uiCustomizationServer.ts so a bad value
     // disables the instance switcher instead of failing the deployment.
     LANGFUSE_UI_INSTANCE_LINKS: z.string().optional(),
 

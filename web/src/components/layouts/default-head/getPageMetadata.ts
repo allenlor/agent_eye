@@ -20,26 +20,26 @@ type PageMetadata = {
 
 const cloudAuthPages: Record<string, PageMetadata> = {
   "/auth/sign-in": {
-    title: "Sign in | Langfuse Cloud",
+    title: "Sign in | AgentEye",
     description:
-      "Sign in to Langfuse Cloud, the open source agent evals & observability platform. EU, US, Japan, and HIPAA data regions.",
+      "Sign in to AgentEye, the agent evals and observability platform.",
   },
   "/auth/sign-up": {
-    title: "Sign up | Langfuse Cloud",
+    title: "Sign up | AgentEye",
     description:
-      "Create a free Langfuse Cloud account. No credit card required. Trace, evaluate, and manage prompts for your LLM application.",
+      "Create an AgentEye account. Trace, evaluate, and manage prompts for your agent application.",
   },
 };
 
 const selfHostedAuthPages: Record<string, PageMetadata> = {
   "/auth/sign-in": {
-    title: "Sign in | Langfuse",
+    title: "Sign in | AgentEye",
     description:
-      "Sign in to Langfuse, the open source agent evals & observability platform.",
+      "Sign in to AgentEye, the agent evals and observability platform.",
   },
   "/auth/sign-up": {
-    title: "Sign up | Langfuse",
-    description: "Create a Langfuse account.",
+    title: "Sign up | AgentEye",
+    description: "Create an AgentEye account.",
   },
 };
 
@@ -48,16 +48,16 @@ const selfHostedAuthPages: Record<string, PageMetadata> = {
 // shows the user has no password yet; that cannot be known from the route.
 const passwordPages: Record<string, PageMetadata> = {
   "/auth/reset-password": {
-    title: "Reset password | Langfuse",
-    description: "Reset the password of your Langfuse account.",
+    title: "Reset password | AgentEye",
+    description: "Reset the password of your AgentEye account.",
   },
   "/auth/setup-password": {
-    title: "Set password | Langfuse",
-    description: "Set the password of your Langfuse account.",
+    title: "Set password | AgentEye",
+    description: "Set the password of your AgentEye account.",
   },
 };
 
-const defaultMetadata: PageMetadata = { title: "Langfuse" };
+const defaultMetadata: PageMetadata = { title: "AgentEye" };
 
 /**
  * Metadata that must be in the server-rendered HTML. Pages own their own

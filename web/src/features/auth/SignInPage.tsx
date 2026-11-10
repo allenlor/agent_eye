@@ -790,8 +790,11 @@ export default function SignInPage({
             <LangfuseIcon alt="" />
           </div>
           <h2 className="text-primary mt-4 text-center text-2xl leading-9 font-bold tracking-tight">
-            {t("Sign in to your account")}
+            AgentEye
           </h2>
+          <p className="text-muted-foreground mt-2 text-center text-sm">
+            {t("Sign in to your account")}
+          </p>
         </div>
 
         {isLangfuseCloud && (

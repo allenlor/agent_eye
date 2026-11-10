@@ -9,8 +9,11 @@ const mocks = vi.hoisted(() => ({ emit: vi.fn() }));
 
 // The emit itself is fire-and-forget inside the helper; what this file pins is
 // which lifecycle mutations call it, and with which org on each side.
-vi.mock("@/src/ee/features/billing/server/chb/chbProjectEvents", () => ({
+vi.mock("@/src/commercial/billingServer", () => ({
   emitChbProjectEvent: mocks.emit,
+  isCloudBillingEnabled: () => false,
+  mapStripeProductIdToPlan: () => null,
+  resolveBillingService: vi.fn(),
 }));
 
 import { appRouter } from "@/src/server/api/root";

@@ -25,7 +25,7 @@ import { SettingsDangerZone } from "@/src/components/SettingsDangerZone";
 import { ActionButton } from "@/src/components/ActionButton";
 import { BatchExportsSettingsPage } from "@/src/features/batch-exports";
 import { BatchActionsSettingsPage } from "@/src/features/batch-actions";
-import { AuditLogsSettingsPage } from "@/src/ee/features/audit-log-viewer";
+import { AuditLogsSettingsPage } from "@/src/commercial/settings";
 import { ModelsSettings } from "@/src/features/models";
 import ConfigureRetention from "@/src/features/projects/components/ConfigureRetention";
 import ContainerPage from "@/src/components/layouts/container-page";

@@ -71,12 +71,12 @@ describe("getOrganizationPlanServerSide (cloud)", () => {
     ).toBe("cloud:enterprise");
   });
 
-  it("still resolves Stripe orgs from the product id", () => {
+  it("does not map Stripe product ids in this build", () => {
     expect(
       getOrganizationPlanServerSide(
         cloudConfig({ stripe: { activeProductId: STRIPE_TEAM_PRODUCT_ID } }),
       ),
-    ).toBe("cloud:team");
+    ).toBe("cloud:hobby");
   });
 
   it("resolves an org with no billing state to cloud:hobby", () => {

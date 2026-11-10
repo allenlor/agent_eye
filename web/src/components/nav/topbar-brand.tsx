@@ -2,8 +2,7 @@
 /* eslint-disable @repo/no-style-props */
 import { cn } from "@/src/utils/tailwind";
 import Link from "next/link";
-import { env } from "@/src/env.mjs";
-import { useUiCustomization } from "@/src/ee/features/ui-customization";
+import { useUiCustomization } from "@/src/commercial/uiCustomization";
 import { PlusIcon } from "lucide-react";
 import { LangfuseIcon } from "@/src/components/design-system/LangfuseIcon/LangfuseIcon";
 
@@ -35,7 +34,7 @@ export const TopbarBrand = ({
   return (
     <Link
       href="/"
-      aria-label="Langfuse home"
+      aria-label="AgentEye home"
       className={cn("flex shrink-0 items-center gap-1", className)}
     >
       {logoLight && logoDark ? (
@@ -58,20 +57,7 @@ export const TopbarBrand = ({
           <LangfuseIcon size={16} />
         </>
       ) : variant === "wordmark" ? (
-        <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="max-h-5 max-w-24 dark:hidden"
-            src={`${env.NEXT_PUBLIC_BASE_PATH ?? ""}/wordart-black.svg`}
-            alt="Langfuse Logo"
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="hidden max-h-5 max-w-24 dark:block"
-            src={`${env.NEXT_PUBLIC_BASE_PATH ?? ""}/wordart-white.svg`}
-            alt="Langfuse Logo"
-          />
-        </>
+        <span className="text-sm font-semibold tracking-tight">AgentEye</span>
       ) : (
         <LangfuseIcon size={28} />
       )}

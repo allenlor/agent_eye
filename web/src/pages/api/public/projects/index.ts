@@ -1,7 +1,7 @@
 import { cors, runMiddleware } from "@/src/features/public-api/server/cors";
 import { prisma } from "@langfuse/shared/src/db";
 import { logger } from "@langfuse/shared/src/server";
-import { handleCreateProject } from "@/src/ee/features/admin-api/server/projects/createProject";
+import { createProject } from "@/src/commercial/projectAdmin";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import {
@@ -104,6 +104,11 @@ export default async function handler(
       });
     }
 
-    return handleCreateProject(req, res, authCheck.scope);
+    return createProject(
+      authCheck.scope.orgId,
+      authCheck.scope.apiKeyId,
+      req,
+      res,
+    );
   }
 }

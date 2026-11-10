@@ -1,7 +1,7 @@
 import { cors, runMiddleware } from "@/src/features/public-api/server/cors";
 import { logger } from "@langfuse/shared/src/server";
 import { RateLimitService } from "@/src/features/public-api/server/RateLimitService";
-import { handleGetProjects } from "@/src/ee/features/admin-api/server/projects";
+import { listOrganizationProjects } from "@/src/commercial/projectAdmin";
 import { shadowAuth, writeOrgError } from "@/src/features/public-api/server";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
@@ -50,16 +50,5 @@ export default async function handler(
     return rateLimitCheck.sendRestResponseIfLimited(res);
   }
 
-  // Route to the appropriate handler based on HTTP method
-  try {
-    return handleGetProjects(req, res, authCheck.scope.orgId, authCheck.ctx);
-  } catch (error) {
-    logger.error(
-      `Error handling organization projects for ${req.method}`,
-      error,
-    );
-    return res.status(500).json({
-      error: "Internal server error",
-    });
-  }
+  return listOrganizationProjects(authCheck.scope.orgId, res);
 }

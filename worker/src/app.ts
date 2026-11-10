@@ -76,7 +76,7 @@ import {
   blobStorageIntegrationProcessor,
 } from "./queues/blobStorageIntegrationQueue";
 import { coreDataS3ExportProcessor } from "./queues/coreDataS3ExportQueue";
-import { meteringDataPostgresExportProcessor } from "./ee/meteringDataPostgresExport/handleMeteringDataPostgresExportJob";
+import { meteringDataPostgresExportProcessor } from "./commercial/disabledJobs";
 import {
   dataRetentionProcessingProcessor,
   dataRetentionProcessor,

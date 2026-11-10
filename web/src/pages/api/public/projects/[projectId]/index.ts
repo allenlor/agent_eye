@@ -1,10 +1,7 @@
 import { cors, runMiddleware } from "@/src/features/public-api/server/cors";
 import { prisma } from "@langfuse/shared/src/db";
 import { logger } from "@langfuse/shared/src/server";
-import {
-  handleUpdateProject,
-  handleDeleteProject,
-} from "@/src/ee/features/admin-api/server/projects/projectById";
+import { deleteProject, updateProject } from "@/src/commercial/projectAdmin";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import {
@@ -68,12 +65,19 @@ export default async function handler(
     });
   }
 
-  // Route to the appropriate handler based on HTTP method
   if (req.method === "PUT") {
-    return handleUpdateProject(req, res, projectId, authCheck.scope);
+    return updateProject(
+      authCheck.scope.orgId,
+      projectId,
+      authCheck.scope.apiKeyId,
+      req,
+      res,
+    );
   }
-
-  if (req.method === "DELETE") {
-    return handleDeleteProject(req, res, projectId, authCheck.scope);
-  }
+  return deleteProject(
+    authCheck.scope.orgId,
+    projectId,
+    authCheck.scope.apiKeyId,
+    res,
+  );
 }

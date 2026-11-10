@@ -10,18 +10,17 @@ import { DeleteOrganizationDialogController } from "@/src/features/organizations
 import { useQueryOrganization } from "@/src/features/organizations/hooks";
 import { useRouter } from "next/router";
 import { SettingsDangerZone } from "@/src/components/SettingsDangerZone";
-import { BillingSettings } from "@/src/ee/features/billing/components/BillingSettings";
-import { useHasEntitlement, usePlan } from "@/src/features/entitlements";
+import { BillingSettings } from "@/src/commercial/billing";
+import { useHasEntitlement } from "@/src/features/entitlements";
 import ContainerPage from "@/src/components/layouts/container-page";
 import { NoDataOrLoading } from "@/src/components/NoDataOrLoading";
-import { SSOSettings } from "@/src/ee/features/sso-settings";
-import { isCloudPlan } from "@langfuse/shared";
+import { SSOSettings } from "@/src/commercial/settings";
 import { useQueryProjectOrOrganization } from "@/src/features/projects";
 import { ApiKeyList } from "@/src/features/public-api/components/ApiKeyList";
 import AIFeatureSwitch from "@/src/features/organizations/components/AIFeatureSwitch";
-import { useIsCloudBillingAvailable } from "@/src/ee/features/billing";
+import { useIsCloudBillingAvailable } from "@/src/commercial/billing";
 import { env } from "@/src/env.mjs";
-import { OrgAuditLogsSettingsPage } from "@/src/ee/features/audit-log-viewer";
+import { OrgAuditLogsSettingsPage } from "@/src/commercial/settings";
 import { useV4UpgradeUiFlag } from "@/src/features/v4-migration/useV4UpgradeUiEnabled";
 import { OrganizationFeaturePreviewsSettings } from "@/src/features/feature-flags/components/OrganizationFeaturePreviewsSettings";
 import { useIsFeatureEnabled } from "@/src/features/feature-flags";
@@ -60,8 +59,6 @@ export function useOrganizationSettingsPages(): OrganizationSettingsPage[] {
     organizationId: organization?.id,
     scope: "gateway:manage",
   });
-  const plan = usePlan();
-  const isLangfuseCloud = isCloudPlan(plan) ?? false;
   const isCloudBillingAvailable = useIsCloudBillingAvailable();
   const showV4Migration = useV4UpgradeUiFlag();
   const isAiGatewayEnabled = useIsFeatureEnabled("aiGateway", {
@@ -76,7 +73,6 @@ export function useOrganizationSettingsPages(): OrganizationSettingsPage[] {
     showBillingSettings: showBillingSettings && isCloudBillingAvailable,
     showOrgApiKeySettings,
     showAuditLogs,
-    isLangfuseCloud,
     showV4Migration,
     showAiGateway: canManageGateway && isAiGatewayEnabled,
     showFeaturePreviews:
@@ -89,7 +85,6 @@ export const getOrganizationSettingsPages = ({
   showBillingSettings,
   showOrgApiKeySettings,
   showAuditLogs,
-  isLangfuseCloud,
   showV4Migration,
   showAiGateway,
   showFeaturePreviews,
@@ -107,7 +102,6 @@ export const getOrganizationSettingsPages = ({
   showBillingSettings: boolean;
   showOrgApiKeySettings: boolean;
   showAuditLogs: boolean;
-  isLangfuseCloud: boolean;
   showV4Migration: boolean;
   showAiGateway: boolean;
   showFeaturePreviews: boolean;
@@ -219,7 +213,7 @@ export const getOrganizationSettingsPages = ({
       "verify",
     ],
     content: <SSOSettings orgId={organization.id} />,
-    show: isLangfuseCloud,
+    show: true,
   },
   {
     title: "Projects",

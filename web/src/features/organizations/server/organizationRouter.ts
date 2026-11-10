@@ -20,10 +20,10 @@ import {
 import {
   isCloudBillingEnabled,
   resolveBillingService,
-} from "@/src/ee/features/billing/server";
+} from "@/src/commercial/billingServer";
 import { shouldAutoEnableV4 } from "@/src/features/events/server";
 import { buildAdminOrgContext } from "@/src/features/organizations/server/adminOrgContext";
-import { getSfdcService } from "@/src/ee/features/sfdc-sync/server";
+import { getSfdcService } from "@/src/commercial/sfdc";
 import {
   featurePreviewFlags,
   filterFeaturePreviewFlags,

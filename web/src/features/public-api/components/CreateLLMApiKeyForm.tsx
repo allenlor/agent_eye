@@ -42,7 +42,7 @@ import { TypeSafeUpstreamCards } from "@/src/features/llm-api-key/components/Typ
 import { Tabs } from "@/src/components/design-system/Tabs/Tabs";
 import { api, reportNonTrpcError, type RouterOutputs } from "@/src/utils/api";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
-import { type useUiCustomization } from "@/src/ee/features/ui-customization";
+import { type useUiCustomization } from "@/src/commercial/uiCustomization";
 import { DialogFooter, DialogBody } from "@/src/components/ui/dialog";
 import { env } from "@/src/env.mjs";
 import {

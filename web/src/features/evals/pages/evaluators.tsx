@@ -7,7 +7,7 @@ import { getEvalsTabs, EVALS_TABS } from "@/src/features/navigation";
 import { ActionButton } from "@/src/components/ActionButton";
 import { api } from "@/src/utils/api";
 import { useEntitlementLimit } from "@/src/features/entitlements";
-import { SupportOrUpgradePage } from "@/src/ee/features/billing";
+import { SupportOrUpgradePage } from "@/src/commercial/billing";
 import { EvaluatorsOnboarding } from "@/src/components/onboarding/EvaluatorsOnboarding";
 import { ManageDefaultEvalModel } from "@/src/features/evals/components/manage-default-eval-model";
 import { V4MigrationUpdateRequiredBadge } from "@/src/features/v4-migration/V4MigrationDelayBadge";

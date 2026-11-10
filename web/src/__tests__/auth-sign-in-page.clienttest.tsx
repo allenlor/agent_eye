@@ -42,8 +42,14 @@ vi.mock("@/src/features/organizations/hooks", () => ({
   }),
 }));
 
-vi.mock("@/src/ee/features/multi-tenant-sso/utils", () => ({
+vi.mock("@/src/commercial/sso", () => ({
   isAnySsoConfigured: async () => false,
+  loadSsoProviders: async () => [],
+  getSsoAuthProviderIdForDomain: async () => null,
+  findMultiTenantSsoConfig: async () => ({
+    isMultiTenantSsoProvider: false,
+    domain: null,
+  }),
 }));
 
 vi.mock("@/src/features/auth/components/AuthCloudRegionSwitch", () => ({

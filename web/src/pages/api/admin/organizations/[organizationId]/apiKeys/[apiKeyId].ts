@@ -1,10 +1,8 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { logger } from "@langfuse/shared/src/server";
-import { AdminApiAuthService } from "@/src/ee/features/admin-api/server";
-import {
-  validateQueryParams,
-  handleDeleteApiKey,
-} from "@/src/ee/features/admin-api/server/organizations/apiKeys/apiKeyById";
+import { AdminApiAuthService } from "@/src/commercial/adminApiAuth";
+import { routeParam } from "@/src/commercial/notAvailable";
+import { deleteOrganizationApiKey } from "@/src/commercial/apiKeysAdmin";
 import { prisma } from "@langfuse/shared/src/db";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import { getSelfHostedInstancePlanServerSide } from "@/src/features/entitlements/server/getPlan";
@@ -26,7 +24,7 @@ export default async function handler(
 
     if (
       !hasEntitlementBasedOnPlan({
-        plan: getSelfHostedInstancePlanServerSide(),
+        plan: getSelfHostedInstancePlanServerSide() ?? "oss",
         entitlement: "admin-api",
       })
     ) {
@@ -35,12 +33,11 @@ export default async function handler(
       });
     }
 
-    const params = validateQueryParams(req.query);
-    if (!params) {
+    const organizationId = routeParam(req.query, "organizationId");
+    const apiKeyId = routeParam(req.query, "apiKeyId");
+    if (!organizationId || !apiKeyId) {
       return res.status(400).json({ error: "Invalid request parameters" });
     }
-
-    const { organizationId, apiKeyId } = params;
 
     // Check if organization exists
     const organization = await prisma.organization.findUnique({
@@ -51,14 +48,7 @@ export default async function handler(
       return res.status(404).json({ error: "Organization not found" });
     }
 
-    // Handle different HTTP methods
-    switch (req.method) {
-      case "DELETE":
-        return await handleDeleteApiKey(req, res, organizationId, apiKeyId);
-      default:
-        res.status(405).json({ error: "Method Not Allowed" });
-        return;
-    }
+    return deleteOrganizationApiKey(organizationId, apiKeyId, res);
   } catch (e) {
     logger.error("Failed to process organization API key request", e);
     res.status(500).json({ error: "Internal server error" });

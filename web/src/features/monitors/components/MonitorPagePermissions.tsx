@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 
 import { ErrorPage } from "@/src/components/error-page";
-import { SupportOrUpgradePage } from "@/src/ee/features/billing";
+import { SupportOrUpgradePage } from "@/src/commercial/billing";
 import { useLangfuseV4WriteMode } from "@/src/features/organizations";
 import { useHasProjectAccess } from "@/src/features/rbac";
 import useProjectIdFromURL from "@/src/hooks/useProjectIdFromURL";

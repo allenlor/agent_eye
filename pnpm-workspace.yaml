@@ -4,7 +4,6 @@ packages:
   - "worker"
   - "ai-gateway"
   - "packages/**"
-  - "ee"
 catalog:
   "@aws-sdk/client-cloudwatch": 3.1074.0
   "@aws-sdk/client-eventbridge": 3.1074.0

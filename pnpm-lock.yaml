@@ -125,31 +125,6 @@ importers:
         specifier: ^7.4.4
         version: 7.4.4
 
-  ee:
-    dependencies:
-      '@langfuse/shared':
-        specifier: workspace:*
-        version: link:../packages/shared
-      zod:
-        specifier: 4.3.6
-        version: 4.3.6
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../packages/config-eslint
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../packages/config-typescript
-      '@types/node':
-        specifier: ^24.3.0
-        version: 24.3.0
-      eslint:
-        specifier: 'catalog:'
-        version: 10.8.0(jiti@2.7.0)(supports-color@8.1.1)
-      typescript:
-        specifier: 'catalog:'
-        version: '@typescript/typescript6@6.0.2'
-
   packages/config-eslint:
     dependencies:
       '@eslint/compat':

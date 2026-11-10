@@ -3,10 +3,8 @@ import { prisma } from "@langfuse/shared/src/db";
 import { logger } from "@langfuse/shared/src/server";
 import { cors, runMiddleware } from "@/src/features/public-api/server/cors";
 import { RateLimitService } from "@/src/features/public-api/server/RateLimitService";
-import {
-  validateQueryParams,
-  handleDeleteApiKey,
-} from "@/src/ee/features/admin-api/server/projects/projectById/apiKeys/apiKeyById";
+import { routeParam } from "@/src/commercial/notAvailable";
+import { deleteProjectApiKey } from "@/src/commercial/apiKeysAdmin";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import {
   shadowAuth,
@@ -34,12 +32,11 @@ export default async function handler(
       return writeProjectError(res, authCheck.error);
     }
 
-    const params = validateQueryParams(req.query);
-    if (!params) {
+    const projectId = routeParam(req.query, "projectId");
+    const apiKeyId = routeParam(req.query, "apiKeyId");
+    if (!projectId || !apiKeyId) {
       return res.status(400).json({ message: "Invalid request parameters" });
     }
-
-    const { projectId, apiKeyId } = params;
 
     if (
       !hasEntitlementBasedOnPlan({
@@ -75,20 +72,7 @@ export default async function handler(
         .json({ message: "Project not found or you don't have access to it" });
     }
 
-    // Handle different HTTP methods
-    switch (req.method) {
-      case "DELETE":
-        return await handleDeleteApiKey(
-          req,
-          res,
-          projectId,
-          apiKeyId,
-          authCheck.scope.orgId,
-        );
-      default:
-        res.status(405).json({ message: "Method Not Allowed" });
-        return;
-    }
+    return deleteProjectApiKey(projectId, apiKeyId, res);
   } catch (e) {
     logger.error("Failed to process project API key request", e);
     res.status(500).json({ message: "Internal server error" });

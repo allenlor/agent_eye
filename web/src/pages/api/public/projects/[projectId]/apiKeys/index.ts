@@ -3,11 +3,11 @@ import { prisma } from "@langfuse/shared/src/db";
 import { logger } from "@langfuse/shared/src/server";
 import { cors, runMiddleware } from "@/src/features/public-api/server/cors";
 import { RateLimitService } from "@/src/features/public-api/server/RateLimitService";
+import { routeParam } from "@/src/commercial/notAvailable";
 import {
-  validateQueryAndExtractId,
-  handleGetApiKeys,
-  handleCreateApiKey,
-} from "@/src/ee/features/admin-api/server/projects/projectById/apiKeys";
+  createProjectApiKey,
+  listProjectApiKeys,
+} from "@/src/commercial/apiKeysAdmin";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
 import {
   shadowAuth,
@@ -35,7 +35,7 @@ export default async function handler(
       return writeProjectError(res, authCheck.error);
     }
 
-    const projectId = validateQueryAndExtractId(req.query);
+    const projectId = routeParam(req.query, "projectId");
     if (!projectId) {
       return res.status(400).json({ message: "Invalid project ID" });
     }
@@ -74,22 +74,15 @@ export default async function handler(
         .json({ message: "Project not found or you don't have access to it" });
     }
 
-    // Handle different HTTP methods
-    switch (req.method) {
-      case "GET":
-        return await handleGetApiKeys(req, res, projectId);
-      case "POST":
-        return await handleCreateApiKey(
-          req,
-          res,
-          projectId,
-          authCheck.scope.orgId,
-          authCheck.scope.apiKeyId,
-        );
-      default:
-        res.status(405).json({ message: "Method Not Allowed" });
-        return;
+    if (req.method === "GET") {
+      return listProjectApiKeys(projectId, res);
     }
+    return createProjectApiKey(
+      projectId,
+      authCheck.scope.apiKeyId,
+      req,
+      res,
+    );
   } catch (e) {
     logger.error("Failed to process project API key request", e);
     res.status(500).json({ message: "Internal server error" });

@@ -16,3 +16,6 @@ README.md
 ai-gateway/target
 packages/native/target
 packages/native/*.node
+ee
+web/src/ee
+worker/src/ee

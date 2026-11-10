@@ -137,7 +137,15 @@ export const entitlementAccess: Record<
     },
   },
   oss: {
-    entitlements: selfHostedAllPlansEntitlements,
+    entitlements: [
+      ...selfHostedAllPlansEntitlements,
+      "rbac-project-roles",
+      "self-host-ui-customization",
+      "audit-logs",
+      "data-retention",
+      "prompt-protected-labels",
+      "admin-api",
+    ],
     entitlementLimits: {
       "annotation-queue-count": false,
       "organization-member-count": false,

@@ -4,7 +4,7 @@ import { useHasEntitlement, usePlan } from "@/src/features/entitlements";
 import { useIsFeatureEnabled } from "@/src/features/feature-flags";
 import { useQueryProjectOrOrganization } from "@/src/features/projects";
 import { useHasOrganizationAccess } from "@/src/features/rbac";
-import { useIsCloudBillingAvailable } from "@/src/ee/features/billing";
+import { useIsCloudBillingAvailable } from "@/src/commercial/billing";
 import { useV4UpgradeUiFlag } from "@/src/features/v4-migration/useV4UpgradeUiEnabled";
 import { useOrganizationSettingsPages } from "@/src/features/organizations/OrganizationSettingsPage";
 
@@ -47,8 +47,10 @@ vi.mock(
   }),
 );
 
-vi.mock("@/src/ee/features/billing/components/BillingSettings", () => ({
+vi.mock("@/src/commercial/billing", () => ({
+  useIsCloudBillingAvailable: vi.fn(),
   BillingSettings: () => null,
+  SupportOrUpgradePage: () => null,
 }));
 
 vi.mock("@/src/features/entitlements/hooks", () => ({
@@ -56,8 +58,10 @@ vi.mock("@/src/features/entitlements/hooks", () => ({
   usePlan: vi.fn(),
 }));
 
-vi.mock("@/src/ee/features/sso-settings", () => ({
+vi.mock("@/src/commercial/settings", () => ({
   SSOSettings: () => null,
+  OrgAuditLogsSettingsPage: () => null,
+  AuditLogsSettingsPage: () => null,
 }));
 
 vi.mock("@langfuse/shared", () => ({
@@ -76,13 +80,6 @@ vi.mock("@/src/features/organizations/components/AIFeatureSwitch", () => ({
   default: () => null,
 }));
 
-vi.mock("@/src/ee/features/billing/utils/isCloudBilling", () => ({
-  useIsCloudBillingAvailable: vi.fn(),
-}));
-
-vi.mock("@/src/ee/features/audit-log-viewer", () => ({
-  OrgAuditLogsSettingsPage: () => null,
-}));
 
 vi.mock("@/src/features/rbac/utils/checkOrganizationAccess", () => ({
   useHasOrganizationAccess: vi.fn(),

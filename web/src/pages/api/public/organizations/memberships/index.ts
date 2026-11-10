@@ -2,10 +2,10 @@ import { cors, runMiddleware } from "@/src/features/public-api/server/cors";
 import { logger } from "@langfuse/shared/src/server";
 import { RateLimitService } from "@/src/features/public-api/server/RateLimitService";
 import {
-  handleGetMemberships,
-  handleUpdateMembership,
-  handleDeleteMembership,
-} from "@/src/ee/features/admin-api/server/memberships";
+  deleteOrganizationMembership,
+  listOrganizationMemberships,
+  upsertOrganizationMembership,
+} from "@/src/commercial/membershipAdmin";
 import { shadowAuth, writeOrgError } from "@/src/features/public-api/server";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { hasEntitlementBasedOnPlan } from "@/src/features/entitlements/server";
@@ -57,28 +57,16 @@ export default async function handler(
     return rateLimitCheck.sendRestResponseIfLimited(res);
   }
 
-  // Route to the appropriate handler based on HTTP method
-  try {
-    switch (req.method) {
-      case "GET":
-        return handleGetMemberships(req, res, authCheck.scope.orgId);
-      case "PUT":
-        return handleUpdateMembership(req, res, authCheck.scope.orgId);
-      case "DELETE":
-        return handleDeleteMembership(req, res, authCheck.scope.orgId);
-      default:
-        // This should never happen due to the check at the beginning
-        return res.status(405).json({
-          error: "Method not allowed",
-        });
-    }
-  } catch (error) {
-    logger.error(
-      `Error handling organization memberships for ${req.method}`,
-      error,
-    );
-    return res.status(500).json({
-      error: "Internal server error",
-    });
+  if (req.method === "GET") {
+    return listOrganizationMemberships(authCheck.scope.orgId, res);
   }
+  if (req.method === "PUT") {
+    return upsertOrganizationMembership(
+      authCheck.scope.orgId,
+      authCheck.scope.apiKeyId,
+      req,
+      res,
+    );
+  }
+  return deleteOrganizationMembership(authCheck.scope.orgId, req, res);
 }
